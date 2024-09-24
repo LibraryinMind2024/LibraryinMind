@@ -7,14 +7,15 @@
 <body>
 <h3>네이버 오픈 API를 활용한 도서 목록</h3>
 
-
-<tr>
-    <td>isbn</td>
-    <td><img src="#" alt=""></td>
-    <td><a href="#">도서제목</a></td>
-    <td>저자/출판사</td>
-    <td>출판일</td>
-</tr>
+<table border="1">
+    <tr th:each="book:${books}">
+        <td>[[${book.isbn}]]</td>
+        <td><img th:src="${book.image}" th:alt="${book.title}" width="100"></td>
+        <td><a th:href="${book.link}">[[${book.title}]]</a></td>
+        <td>[[${book.author}]]/[[${book.publisher}]]</td>
+        <td>[[${book.pubdate}]]</td>
+    </tr>
+</table>
 
 </body>
 </html>
