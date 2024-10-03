@@ -21,12 +21,12 @@
     <tbody>
     <tr th:block th:each="diaryDto : ${diaryDtoList}">
       <th scope="row">
+        <a th:href="@{'/post/' + ${diaryDto.id}}">
         <span th:text="${diaryDto.id}"></span>
+        </a>
       </th>
       <td>
-        <a th:href="@{'/post/' + ${diaryDto.id}}">
           <span th:text="${diaryDto.keyword_1}"></span>
-        </a>
       </td>
       <td>
         <span th:text="${diaryDto.keyword_2}"></span>

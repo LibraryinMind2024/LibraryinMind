@@ -75,5 +75,16 @@ public class DiaryController {
         }
         return "redirect:/";
     }
+    @GetMapping("/post/{id}")
+    public String detail(@PathVariable("id") Long id, Model model) {
+        DiaryDto diaryDto = diaryService.getPost(id);
+        model.addAttribute("post", diaryDto);
+        return "Detail.html";
+    }
+    @DeleteMapping("/post/{id}")
+    public String delete(@PathVariable("id") Long id) {
+        diaryService.deletePost(id);
+        return "redirect:/";
+    }
 
 }

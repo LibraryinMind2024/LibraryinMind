@@ -53,9 +53,15 @@ public class DiaryService {
                 .keyword_2(diaryEntity.getKeyword_2())
                 .keyword_3(diaryEntity.getKeyword_3())
                 .fileId(diaryEntity.getFileId())
+                .createdDate(diaryEntity.getCreatedDate())
                 .build();
 
         return diaryDto;
+    }
+
+    @Transactional
+    public void deletePost(Long id) {
+        diaryRepository.deleteById(id);
     }
 
 }
