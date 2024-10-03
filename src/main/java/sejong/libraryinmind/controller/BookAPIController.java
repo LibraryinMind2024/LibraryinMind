@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -20,7 +19,7 @@ import java.util.List;
 @Controller
 public class BookAPIController {
 
-    @GetMapping("/list")
+    @GetMapping("/bookapi")
     public String list(String text, Model model){
 
         //네이버 검색 API 요청
@@ -64,7 +63,7 @@ public class BookAPIController {
         List<BookVO> books =resultVO.getItems();	// books를 list.html에 출력 -> model 선언
         model.addAttribute("books", books);
 
-        return "list";
+        return "BookAPI";
     }
 
 }

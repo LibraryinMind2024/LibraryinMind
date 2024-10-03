@@ -3,6 +3,8 @@ package sejong.libraryinmind.dto;
 import lombok.*;
 import sejong.libraryinmind.entity.DiaryEntity;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @ToString
@@ -13,6 +15,7 @@ public class DiaryDto {
     private String keyword_2;
     private String keyword_3;
     private Long fileId;
+    private LocalDateTime createdDate;
 
     public DiaryEntity toEntity(){
         DiaryEntity build = DiaryEntity.builder()
@@ -26,12 +29,13 @@ public class DiaryDto {
     }
 
     @Builder
-    public DiaryDto(Long id, String keyword_1, String keyword_2, String keyword_3,Long fileId){
+    public DiaryDto(Long id, String keyword_1, String keyword_2, String keyword_3,Long fileId, LocalDateTime createdDate){
         this.id = id;
         this.keyword_1 = keyword_1;
         this.keyword_2 = keyword_2;
         this.keyword_3 = keyword_3;
         this.fileId = fileId;
+        this.createdDate = createdDate;
     }
 
 }

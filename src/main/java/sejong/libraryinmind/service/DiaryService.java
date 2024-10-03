@@ -5,15 +5,22 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import sejong.libraryinmind.controller.DiaryController;
 import sejong.libraryinmind.dto.DiaryDto;
+import sejong.libraryinmind.entity.CustomerEntity;
 import sejong.libraryinmind.entity.DiaryEntity;
 import sejong.libraryinmind.repository.DiaryRepository;
 import sejong.libraryinmind.repository.FileRepository;
+
+import java.util.List;
 
 @Service
 public class DiaryService {
     private DiaryRepository diaryRepository;
     public DiaryService(DiaryRepository diaryRepository){
         this.diaryRepository = diaryRepository;
+    }
+
+    public List<DiaryEntity> getList(){
+        return this.diaryRepository.findAll();
     }
 
     @Transactional

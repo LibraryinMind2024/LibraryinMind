@@ -26,10 +26,10 @@ public class CustomerController {
         return  "Customer";
     }
 
-    @RequestMapping("/")
-    public String root(){
-        return "redirect:/customer";
-    }
+//    @RequestMapping("/")
+//    public String root(){
+//        return "redirect:/customer";
+//    }
 
     @PostMapping("/customer/create")
     public String customerCreate(@RequestParam String username, String password){

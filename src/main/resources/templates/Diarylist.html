@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>게시판 - 목록</title>
+  <link rel="stylesheet" href="/webjars/bootstrap/4.5.0/css/bootstrap.min.css" />
+</head>
+<body>
+<div class="container">
+  <table class="table">
+    <thead class="thead-light">
+    <tr class="text-center">
+      <th scope="col">아이디</th>
+      <th scope="col">키워드 1</th>
+      <th scope="col">키워드 2</th>
+      <th scope="col">키워드 3</th>
+      <th scope="col">작성일</th>
+      <th scope="col">일기 사진</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:block th:each="diaryentity : ${diaryEntityList}">
+      <th scope="row">
+        <span th:text="${diaryentity.id}"></span>
+      </th>
+      <td>
+        <a th:href="@{'/post/' + ${diaryentity.id}}">
+          <span th:text="${diaryentity.keyword_1}"></span>
+        </a>
+      </td>
+      <td>
+        <span th:text="${diaryentity.keyword_2}"></span>
+      </td>
+      <td>
+        <span th:text="${diaryentity.keyword_3}"></span>
+      </td>
+      <td>
+        <span th:text="${#temporals.format(diaryentity.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+      </td>
+
+    </tr>
+    </tbody>
+  </table>
+  <div class="row">
+    <div class="col-auto mr-auto"></div>
+    <div class="col-auto">
+      <a class="btn btn-primary" th:href="@{/post}" role="button">일기 쓰기</a>
+    </div>
+  </div>
+</div>
+<script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
+<script src="/webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>
