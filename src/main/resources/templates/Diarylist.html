@@ -19,23 +19,23 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:block th:each="diaryentity : ${diaryEntityList}">
+    <tr th:block th:each="diaryDto : ${diaryDtoList}">
       <th scope="row">
-        <span th:text="${diaryentity.id}"></span>
+        <span th:text="${diaryDto.id}"></span>
       </th>
       <td>
-        <a th:href="@{'/post/' + ${diaryentity.id}}">
-          <span th:text="${diaryentity.keyword_1}"></span>
+        <a th:href="@{'/post/' + ${diaryDto.id}}">
+          <span th:text="${diaryDto.keyword_1}"></span>
         </a>
       </td>
       <td>
-        <span th:text="${diaryentity.keyword_2}"></span>
+        <span th:text="${diaryDto.keyword_2}"></span>
       </td>
       <td>
-        <span th:text="${diaryentity.keyword_3}"></span>
+        <span th:text="${diaryDto.keyword_3}"></span>
       </td>
       <td>
-        <span th:text="${#temporals.format(diaryentity.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+        <span th:text="${#temporals.format(diaryDto.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
       </td>
 
     </tr>

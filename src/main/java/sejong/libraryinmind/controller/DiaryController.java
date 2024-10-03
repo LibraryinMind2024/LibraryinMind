@@ -28,8 +28,8 @@ public class DiaryController {
     @GetMapping("/")
     public String diarylist(Model model){
 
-        List<DiaryEntity> diaryEntityList = this.diaryService.getList();
-        model.addAttribute("diaryEntityList",diaryEntityList);
+        List<DiaryDto> diaryDtoList = this.diaryService.getList();
+        model.addAttribute("diaryDtoList",diaryDtoList);
 
         return "Diarylist.html";
     }

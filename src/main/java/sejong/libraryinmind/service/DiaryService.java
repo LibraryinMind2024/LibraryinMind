@@ -10,6 +10,7 @@ import sejong.libraryinmind.entity.DiaryEntity;
 import sejong.libraryinmind.repository.DiaryRepository;
 import sejong.libraryinmind.repository.FileRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,8 +20,22 @@ public class DiaryService {
         this.diaryRepository = diaryRepository;
     }
 
-    public List<DiaryEntity> getList(){
-        return this.diaryRepository.findAll();
+    public List<DiaryDto> getList(){
+        List<DiaryEntity> diaryEntityList = diaryRepository.findAll();
+        List<DiaryDto> diaryDtoList = new ArrayList<>();
+
+        for(DiaryEntity diaryEntity : diaryEntityList){
+            DiaryDto diaryDto = DiaryDto.builder()
+                    .id(diaryEntity.getId())
+                    .keyword_1(diaryEntity.getKeyword_1())
+                    .keyword_2(diaryEntity.getKeyword_2())
+                    .keyword_3(diaryEntity.getKeyword_3())
+                    .createdDate(diaryEntity.getCreatedDate())
+                    .build();
+            diaryDtoList.add(diaryDto);
+        }
+
+        return diaryDtoList;
     }
 
     @Transactional
