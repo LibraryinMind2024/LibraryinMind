@@ -1,5 +1,10 @@
 package sejong.libraryinmind.controller;
 
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +18,10 @@ import sejong.libraryinmind.service.FileService;
 import sejong.libraryinmind.util.MD5Generator;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Controller
@@ -79,12 +88,27 @@ public class DiaryController {
     public String detail(@PathVariable("id") Long id, Model model) {
         DiaryDto diaryDto = diaryService.getPost(id);
         model.addAttribute("post", diaryDto);
+
+        FileDto fileDto = fileService.getFile(diaryDto.getFileId());
+        model.addAttribute("file",fileDto);
+
         return "Detail.html";
     }
     @DeleteMapping("/post/{id}")
     public String delete(@PathVariable("id") Long id) {
         diaryService.deletePost(id);
         return "redirect:/";
+    }
+
+    @GetMapping("/download/{fileId}")
+    public ResponseEntity<Resource> fileDownload(@PathVariable("fileId") Long fileId) throws IOException {
+        FileDto fileDto = fileService.getFile(fileId);
+        Path path = Paths.get(fileDto.getFilepath());
+        Resource resource = new InputStreamResource(Files.newInputStream(path));
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDto.getOrigFilename() + "\"")
+                .body(resource);
     }
 
 }
