@@ -53,7 +53,7 @@ public class DiaryController {
 
             Long fileId = fileService.saveFile(fileDto);
             diaryDto.setFileId(fileId);
-            //diaryService.savePost(diaryDto);
+            diaryService.savePost(diaryDto);
 
         }
         catch (Exception e){

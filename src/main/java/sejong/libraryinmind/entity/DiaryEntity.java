@@ -10,23 +10,26 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@EntityListeners(AuditingEntityListener.class)
+//@EntityListeners(AuditingEntityListener.class)
+@Table(name = "diary")
+
 //jpa에게 해당 엔티티는 Auditiong 기능을 사용함을 알림
 public class DiaryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "diary_id")
     private Long id;
 
-    @Column(length = 10, nullable = false)
+    @Column(name = "diary_keyword_1",length = 10, nullable = false)
     private String keyword_1;
 
-    @Column(length = 10, nullable = false)
+    @Column(name = "diary_keyword_2",length = 10, nullable = false)
     private String keyword_2;
 
-    @Column(length = 10, nullable = false)
+    @Column(name = "diary_keyword_3",length = 10, nullable = false)
     private String keyword_3;
 
-    @Column(nullable = false)
+    @Column(name = "diary_fileId",nullable = false)
     private Long fileId; //일기 사진
 
     @Builder

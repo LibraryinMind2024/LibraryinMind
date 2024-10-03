@@ -12,9 +12,10 @@
             <label for="inputFile" class="col-sm-2 col-form-label"><strong>첨부 파일</strong></label>
             <div class="col-sm-10">
                 <div class="custom-file" id="inputFile">
-                    <input name="file" type="file" class="custom-file-input" id="customFile" />
+                    <input name="file" type="file" class="custom-file-input" id="customFile" onchange="readURL(this)" />
                     <label class="custom-file-label" for="customFile">파일을 선택해 주세요.</label>
                 </div>
+                <img id="preview" style="max-width: 30%; height: auto;" />
             </div>
         </div>
         <div class="row">
@@ -33,5 +34,19 @@
         $(this).siblings('.custom-file-label').addClass('selected').html(fileName);
     });
 </script>
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('preview').src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            document.getElementById('preview').src = "";
+        }
+    }
+</script>
+
 </body>
 </html>
