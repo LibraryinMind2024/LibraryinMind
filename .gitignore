@@ -4,6 +4,9 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+*.xlsx
+chrome-mac-arm64
+openpyxl-3.1.5
 
 ### STS ###
 .apt_generated
