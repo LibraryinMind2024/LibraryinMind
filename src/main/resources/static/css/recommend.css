@@ -1,0 +1,238 @@
+/* 전체 페이지의 기본 스타일을 설정 */
+header {
+    background-color: white;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 8px;
+}
+
+.navigation {
+    margin-left: auto;
+}
+
+.navigation ul {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navigation ul li {
+    margin: 0 20px;
+}
+
+.navigation ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.login-button {
+    padding: 10px 20px;
+    background-color: #ffc107;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.login-button:hover {
+    background-color: #e0a800;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header img {
+    width: 50px;
+    height: auto;
+    margin-right: 10px;
+}
+
+header h1 {
+    font-size: 25px;
+    color: #333;
+}
+
+.date-picker-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.date-picker-container label {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.diary-section {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+    gap: 20px;
+    align-items: stretch;
+}
+
+.diary-writing {
+    flex: 1;
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px 20px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    background-image: url("notebook_icon.png"); /* 캐릭터 이미지를 배경으로 설정 */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: left top;
+}
+
+/* 말풍선 스타일 */
+.speech-bubble {
+    position: absolute;
+    top: 20px;
+    left: 130px;
+    background-color: #fff;
+    border: 2px solid #333;
+    border-radius: 10px;
+    padding: 10px;
+    max-width: 150px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 20px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #fff;
+    border-left: 2px solid #333;
+    border-right: 2px solid #333;
+    transform: translateX(10%);
+}
+
+.diary-writing button {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    padding: 15px; /* 버튼 크기 확대 */
+    font-size: 16px; /* 텍스트 크기 확대 */
+    background-color: #ffc107;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.diary-writing button:hover {
+    background-color: #e0a800;
+}
+
+.today-diary {
+    flex: 1;
+    background-color: #fff0d9;
+    border-radius: 8px;
+    padding: 20px 20px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.today-diary input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.keyword-section {
+    flex: 1;
+    background-color: #fff0d9;
+    border-radius: 8px;
+    padding: 20px 20px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.image-preview {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    display: none;
+}
+
+.recommendation {
+    background-color: #fff0d9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.recommendation h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.recommendation .book {
+    display: none;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+.recommendation .book img {
+    width: 150px;
+    margin-right: 40px;
+}
+
+.recommendation .book-info {
+    flex: 1;
+    font-size: 15px;
+    text-align: left;
+}
+
+/* 줄거리 상자 스타일 */
+.summary-box {
+    background-color: white;
+    border: 2px solid #ffc107;
+    border-radius: 8px;
+    padding: 5px;
+    margin-top: 20px;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* 나가기와 확인하기 버튼 스타일 */
+.button-group {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.small-button {
+    padding: 10px 15px;
+    background-color: #ffc107;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.small-button:hover {
+    background-color: #e0a800;
+}
