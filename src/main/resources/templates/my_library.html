@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내 도서함</title>
+    <link rel="stylesheet" href="my_library.css">
+    <link rel="stylesheet" href="https://webfontworld.github.io/NanumSquare/NanumSquare.css">
+    <!-- Font Awesome 아이콘 사용 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<!-- 헤더 섹션 -->
+<header>
+    <img src="notebook_icon.png" alt="Notebook Icon">
+    <a href="main.html"><h1>일기 속 도서관</h1></a>
+    <nav>
+        <ul>
+            <li><a href="#">도서 추천</a></li>
+            <li><a href="my_library.html">도서함</a></li>
+            <li><a href="#">내 정보</a></li>
+        </ul>
+        <button type="button" class="login-button" onClick="location.href='login.html'">로그인</button>
+    </nav>
+</header>
+
+<!-- 날짜 선택 섹션 -->
+<div class="date-picker-container">
+    <label for="diary-date">날짜 선택:</label>
+    <input type="date" id="diary-date" name="diary-date">
+    <button type="button" class="search-button" id="search-button">
+        <i class="fas fa-search"></i>
+    </button>
+</div>
+
+<!-- 메인 섹션 -->
+<main class="main-container">
+    <!-- 나의 일기 섹션 -->
+    <section class="diary-section">
+        <h2>나의 일기</h2>
+        <div class="diary-content" id="diary-content">
+            여기에 일기 내용이 표시됩니다.
+        </div>
+        <div class="keywords">
+            <span id="keyword1">#키워드1</span>
+            <span id="keyword2">#키워드2</span>
+            <span id="keyword3">#키워드3</span>
+        </div>
+    </section>
+
+    <!-- 책 섹션 -->
+    <section class="book-container">
+        <h2>추천 도서</h2>
+        <div class="book-card">
+            <img src="https://via.placeholder.com/80x120" alt="Book Image" class="book-image" id="book-image">
+            <div class="book-info">
+                <h3 id="book-title">책 제목</h3>
+                <p id="book-author">저자: 저자명</p>
+                <p id="book-publisher">출판사: 출판사명</p>
+                <p id="book-summary">줄거리: 여기에 책 줄거리가 표시됩니다.</p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script>
+    document.getElementById("search-button").addEventListener("click", function() {
+        // 임시로 일기 내용과 키워드를 설정
+        document.getElementById("diary-content").innerText = "오늘은 정말 멋진 하루였어. 바람도 시원했고, 많은 생각을 하게 되는 하루였다.";
+        document.getElementById("keyword1").innerText = "#하루";
+        document.getElementById("keyword2").innerText = "#생각";
+        document.getElementById("keyword3").innerText = "#바람";
+
+        // 임시로 책 정보를 설정
+        document.getElementById("book-title").innerText = "임시 책 제목";
+        document.getElementById("book-author").innerText = "저자: 임시 저자명";
+        document.getElementById("book-publisher").innerText = "출판사: 임시 출판사";
+        document.getElementById("book-summary").innerText = "줄거리: 이 책은 주인공이 여행을 떠나면서 겪는 여러 가지 모험을 담고 있다. 재미있고 감동적인 이야기가 가득하다.";
+
+        // 검색 버튼을 누르면 이미지 변경
+        document.getElementById("book-image").src = "book_image.jpg"; // 임시 이미지
+    });
+</script>
+</body>
+</html>

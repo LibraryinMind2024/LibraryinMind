@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>일기 속 도서관</title>
+    <link rel="stylesheet" href="recommend.css">
+
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <img src="notebook_icon.png" alt="Icon">
+        <h1>일기 속 도서관🌲</h1>
+        <nav class="navigation">
+            <ul>
+                <li><a href="#">도서함</a></li>
+                <li><a href="#">내정보</a></li>
+                <li><a href="#">도서추천</a></li>
+            </ul>
+        </nav>
+        <button class="login-button">로그인</button>
+    </header>
+
+    <!-- 날짜 선택 섹션 -->
+    <div class="date-picker-container">
+        <label id="current-date">📅</label>
+    </div>
+
+    <!-- 파일 업로드, 오늘의 일기, 키워드 섹션 -->
+    <div class="diary-section">
+        <div class="diary-writing" id="diary-writing">
+            <div id="speech-bubble" class="speech-bubble">일기 작성하자!</div> <!-- 말풍선 텍스트 변경 -->
+            <img id="image-preview" class="image-preview" alt="이미지를 업로드하세요" />
+            <button id="upload-button">이미지 업로드</button> <!-- 이미지 업로드 버튼 크기 확대 -->
+            <input type="file" id="file-upload" accept="image/*" style="display: none;" />
+        </div>
+
+        <!-- 오늘의 일기 섹션 -->
+        <div class="today-diary">
+            <h2>오늘의 일기</h2>
+            <input type="text" id="diary-text" placeholder="오늘의 하루는 어땠나요?" /> <!-- 기본 텍스트 추가 -->
+        </div>
+
+        <!-- 키워드 섹션 -->
+        <div class="keyword-section">
+            <h2>키워드</h2>
+            <div class="no-content">파일을 업로드하면 AI가 키워드를 분석합니다.</div>
+            <div id="keywords" class="keywords" style="display: none;"></div>
+        </div>
+    </div>
+
+    <!-- 추천 도서 섹션 -->
+    <div class="recommendation">
+        <h2>추천 도서</h2>
+        <div class="no-content">파일을 업로드하면 도서가 추천됩니다.</div>
+        <div class="book">
+            <img id="book-image" src="" alt="Book Image">
+            <div class="book-info">
+                <h3 id="book-title"></h3>
+                <p id="book-author"></p>
+                <div id="book-summary" class="summary-box">
+                    책을 너무 좋아하는 여우가 읽다 못해 꿀꺽 삼켜버리는 책 사랑 이야기
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 나가기 및 확인하기 버튼 섹션 -->
+    <div class="button-group">
+        <button class="small-button">나가기</button>
+        <button class="small-button">확인하기</button>
+    </div>
+
+</div>
+
+<!-- JavaScript -->
+<script>
+    const fileInput = document.getElementById('file-upload');
+    const imagePreview = document.getElementById('image-preview');
+    const uploadButton = document.getElementById('upload-button');
+    const keywordContainer = document.getElementById('keywords');
+    const recommendationBook = document.querySelector('.recommendation .book');
+    const noContentText = document.querySelectorAll('.no-content');
+    const speechBubble = document.getElementById('speech-bubble');
+    const diaryWriting = document.getElementById('diary-writing');
+    const diaryText = document.getElementById('diary-text');
+
+    // 현재 날짜를 가져오는 함수
+    function getCurrentDate() {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = ('0' + (today.getMonth() + 1)).slice(-2); // 월을 2자리로 표시
+        const day = ('0' + today.getDate()).slice(-2); // 일을 2자리로 표시
+        return `${year}-${month}-${day}`;
+    }
+
+    // 페이지 로드 시 오늘의 날짜 표시
+    document.getElementById('current-date').innerText += ` ${getCurrentDate()}`;
+
+    // 파일 업로드 버튼 클릭 시 파일 선택 창 열기
+    uploadButton.addEventListener('click', function() {
+        fileInput.click();
+    });
+
+    // 파일 선택 후 이미지 미리보기 표시 및 데이터 요청 시뮬레이션
+    fileInput.addEventListener('change', function() {
+        const file = fileInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+                speechBubble.style.display = 'none';
+
+                // 캐릭터 이미지와 업로드 버튼을 숨김
+                diaryWriting.style.backgroundImage = 'none';  // 캐릭터 이미지 제거
+                uploadButton.style.display = 'none';
+
+                // 파일 업로드 후 백엔드에 요청하는 부분 (여기서는 시뮬레이션)
+                setTimeout(() => {
+                    // 백엔드에서 받은 데이터를 예시로 채우기
+                    const keywords = ['#행복', '#독서', '#여유'];
+                    const bookData = {
+                        title: "책 먹는 여우",
+                        author: "프란치스카 비어만",
+                        summary: "책을 너무 좋아하는 여우가 읽다 못해 꿀꺽 삼켜버리는 책 사랑 이야기",
+                        image: "책먹는여우.jpg"
+                    };
+
+                    // 텍스트 변환된 내용을 일기 텍스트 상자에 넣기 (시뮬레이션 데이터)
+                    const convertedText = "오늘 하루는 매우 즐거웠어요. 독서를 하며 행복한 시간을 보냈습니다.";
+                    diaryText.value = convertedText;
+
+                    // 키워드 표시
+                    keywordContainer.style.display = 'flex';
+                    keywordContainer.style.flexWrap = 'wrap'; // 키워드가 여러 줄일 경우 줄바꿈
+                    keywordContainer.style.justifyContent = 'center'; // 중앙 정렬
+                    keywords.forEach(keyword => {
+                        const span = document.createElement('span');
+                        span.innerText = keyword;
+                        span.style.backgroundColor = '#ffc107';
+                        span.style.color = '#fff';
+                        span.style.padding = '10px 20px'; // 박스 크기 확대
+                        span.style.borderRadius = '20px';
+                        span.style.fontSize = '16px';
+                        span.style.margin = '5px'; // 키워드 간 간격 추가
+                        keywordContainer.appendChild(span);
+                    });
+
+                    // 추천 도서 표시
+                    recommendationBook.style.display = 'flex';
+                    document.getElementById('book-title').innerText = bookData.title;
+                    document.getElementById('book-author').innerText = bookData.author;
+                    document.getElementById('book-summary').innerText = bookData.summary;
+                    document.getElementById('book-image').src = bookData.image;
+
+                    // '일기를 작성하시면 도서를 추천해 드립니다' 메시지 제거
+                    noContentText.forEach(text => text.style.display = 'none');
+
+                }, 2000); // 2초 후 데이터 표시 (백엔드 통신을 시뮬레이션)
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+
+</body>
+</html>
