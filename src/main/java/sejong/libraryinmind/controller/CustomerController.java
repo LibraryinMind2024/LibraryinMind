@@ -26,10 +26,10 @@ public class CustomerController {
         return  "Customer";
     }
 
-//    @RequestMapping("/")
-//    public String root(){
-//        return "redirect:/customer";
-//    }
+    @RequestMapping("/")
+    public String root(){
+        return "main";
+    }
 
     //회원가입 페이지 이동
     @RequestMapping("/signup")

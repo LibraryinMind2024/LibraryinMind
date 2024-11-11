@@ -1,11 +1,13 @@
 package sejong.libraryinmind.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import sejong.libraryinmind.entity.CustomerEntity;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sejong.libraryinmind.repository.CustomerRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +18,9 @@ public class CustomerService {
 
     private final CustomerRepository customerRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public List<CustomerEntity> getList(){
         return this.customerRepository.findAll();
     }
@@ -23,15 +28,15 @@ public class CustomerService {
     public void create(String username, String password){
         CustomerEntity customerEntity = CustomerEntity.builder()
                 .username(username)
-                .password(password)
+                .password(passwordEncoder.encode(password))
                 .build();
         this.customerRepository.save(customerEntity);
     }
 
     public boolean validateUser(String username, String password) {
-        Optional<CustomerEntity> user = customerRepository.findByUsername(username);
-
-        return user.isPresent() && user.get().getPassword().equals(password);
+        return customerRepository.findByUsername(username)
+                .map(user -> passwordEncoder.matches(password, user.getPassword())) // 암호화된 비밀번호 검증
+                .orElse(false);
     }
 
     @Transactional

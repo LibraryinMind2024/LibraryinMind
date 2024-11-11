@@ -7,11 +7,7 @@
 </head>
 <body>
 <h1>회원 정보</h1>
-<form th:action="@{/customer/create}" method="post">
-    <input name="username" placeholder="닉네임 입력"/>
-    <input name="password" placeholder="비밀번호 입력"/>
-    <button>입력</button>
-</form>
+
 <table>
     <thead>
     <tr>
@@ -23,10 +19,10 @@
     </thead>
     <tbody>
     <tr th:block th:each="customerentity : ${customerEntityList}">
-        <td th:text="${customerentity.customer_id}"></td>
-        <td th:text="${customerentity.customer_username}"></td>
-        <td th:text="${customerentity.customer_password}"></td>
-        <td><button th:attr="onclick='deleteItem(' + ${customerentity.customer_id} + ')'">삭제</button></td>
+        <td th:text="${customerentity.id}"></td>
+        <td th:text="${customerentity.username}"></td>
+        <td th:text="${customerentity.password}"></td>
+        <td><button th:attr="onclick='deleteItem(' + ${customerentity.id} + ')'">삭제</button></td>
     </tr>
     </tbody>
 </table>

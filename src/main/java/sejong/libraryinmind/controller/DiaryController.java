@@ -34,7 +34,7 @@ public class DiaryController {
         this.fileService = fileService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/diary")
     public String diarylist(Model model){
 
         List<DiaryDto> diaryDtoList = this.diaryService.getList();
