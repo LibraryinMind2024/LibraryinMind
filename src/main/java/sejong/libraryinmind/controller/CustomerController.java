@@ -16,14 +16,14 @@ public class CustomerController {
 
     private final CustomerService customerService;
 
-    @RequestMapping("/customer")
+    @RequestMapping("/login")
     //url과 customer 매핑
     public String list(Model model){
 
         List<CustomerEntity> customerEntityList = this.customerService.getList();
         model.addAttribute("customerEntityList", customerEntityList);
 
-        return  "Customer";
+        return  "login";
     }
 
 //    @RequestMapping("/")
@@ -31,11 +31,11 @@ public class CustomerController {
 //        return "redirect:/customer";
 //    }
 
-    @PostMapping("/customer/create")
+    @PostMapping("/login/create")
     public String customerCreate(@RequestParam String username, String password){
         this.customerService.create(username,password);
 
-        return "redirect:/customer";
+        return "redirect:/login";
     }
 
     @DeleteMapping("/customer/delete/{id}")
