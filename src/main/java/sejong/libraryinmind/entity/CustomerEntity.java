@@ -13,11 +13,11 @@ public class CustomerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id")
-    private Long customer_id;
+    private Long id;
 
     @Column(name = "customer_username", nullable = false)
-    private String customer_username;
+    private String username;
 
     @Column(name = "customer_password", nullable = false)
-    private String customer_password;
+    private String password;
 }

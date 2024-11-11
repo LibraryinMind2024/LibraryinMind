@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import sejong.libraryinmind.repository.CustomerRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -21,10 +22,16 @@ public class CustomerService {
 
     public void create(String username, String password){
         CustomerEntity customerEntity = CustomerEntity.builder()
-                .customer_username(username)
-                .customer_password(password)
+                .username(username)
+                .password(password)
                 .build();
         this.customerRepository.save(customerEntity);
+    }
+
+    public boolean validateUser(String username, String password) {
+        Optional<CustomerEntity> user = customerRepository.findByUsername(username);
+
+        return user.isPresent() && user.get().getPassword().equals(password);
     }
 
     @Transactional

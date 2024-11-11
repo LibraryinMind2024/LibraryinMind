@@ -31,6 +31,7 @@ public class CustomerController {
 //        return "redirect:/customer";
 //    }
 
+    //회원가입 페이지 이동
     @RequestMapping("/signup")
     public String signup(Model model){
 
@@ -40,11 +41,31 @@ public class CustomerController {
         return  "signup";
     }
 
+    //회원가입 처리
     @PostMapping("/signup/create")
     public String customerCreate(@RequestParam String username, String password){
         this.customerService.create(username,password);
 
         return "redirect:/signup";
+    }
+
+
+    // 로그인 페이지 이동
+    @GetMapping("/login")
+    public String loginForm() {
+        return "login";
+    }
+
+    // 로그인 처리
+    @PostMapping("/login")
+    public String loginUser(@RequestParam String username, @RequestParam String password, Model model) {
+        if (customerService.validateUser(username, password)) {
+            model.addAttribute("username", username);
+            return "main";  // 로그인 성공 시 환영 페이지로 이동
+        } else {
+            model.addAttribute("error", "아이디 또는 패스워드가 잘못 입력되었습니다.");
+            return "login";
+        }
     }
 
     @DeleteMapping("/customer/delete/{id}")

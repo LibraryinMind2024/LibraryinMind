@@ -7,13 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원가입 페이지</title>
     <link rel="stylesheet" th:href="@{/css/signup.css}">
-    <link rel="stylesheet" href="css/signup.css">
+    <link rel="stylesheet" href="/css/signup.css">
     <link rel="stylesheet" href="https://webfontworld.github.io/NanumSquare/NanumSquare.css">
 </head>
 <body>
 <!-- 헤더 섹션 -->
 <header>
-    <img src="../notebook_icon.png" alt="Notebook Icon">
+    <img src="../image/notebook_icon.png" alt="Notebook Icon">
     <a href="../메인/main.html"><h1>일기 속 도서관</h1></a>
     <nav>
         <ul>
@@ -29,11 +29,7 @@
 <!-- 회원가입 컨테이너 -->
 <div class="signup-container">
     <h2>회원가입</h2>
-    <form id="signupForm">
-        <div class="input-container">
-            <label for="name">이름</label>
-            <input type="text" id="name" name="name" required>
-        </div>
+    <form id="signupForm" th:action="@{/signup/create}" method="post">
         <div class="input-container">
             <label for="username">아이디</label>
             <input type="text" id="username" name="username" required>
@@ -42,18 +38,7 @@
             <label for="password">비밀번호</label>
             <input type="password" id="password" name="password" required>
         </div>
-        <div class="input-container">
-            <label for="school">학교</label>
-            <input type="text" id="school" name="school" required>
-        </div>
-        <div class="input-container">
-            <label for="grade">학년</label>
-            <input type="text" id="grade" name="grade" required>
-        </div>
-        <div class="input-container">
-            <label for="teacher">담당 선생님</label>
-            <input type="text" id="teacher" name="teacher" required>
-        </div>
+
         <button class="signup-button" type="submit">가입하기</button>
     </form>
 </div>

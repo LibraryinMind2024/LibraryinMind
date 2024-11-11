@@ -1,16 +1,19 @@
 <!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library in Diary</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="https://webfontworld.github.io/NanumSquare/NanumSquare.css">
 </head>
 <body>
 <!-- 헤더 섹션 -->
 <header>
-    <img src="notebook_icon.png" alt="Notebook Icon">
+    <img src="../image/notebook_icon.png" alt="Notebook Icon">
     <h1>일기 속 도서관</h1>
     <nav>
         <ul>
@@ -25,7 +28,7 @@
 
 <!-- 소개 섹션1 -->
 <section id="about1">
-    <img src="bulb.png" class="bulb-icon" alt="전구 아이콘">
+    <img src="../image/bulb.png" class="bulb-icon" alt="전구 아이콘">
     <h2> 나의 일상에서 책을 만나다</h2>
     <p>일기 속 도서관, <br/>
         아이들의 마음 속 이야기와 책을 이어주는 특별한 공간입니다.</p>
@@ -41,7 +44,7 @@
             <button class="diary-button">일기 작성하기</button>
         </div>
         <div class="image-container">
-            <img src="tmp.jpg" alt="소개2의 오른쪽이미지">
+            <img src="../image/tmp.jpg" alt="소개2의 오른쪽이미지">
         </div>
     </div>
 </section>
