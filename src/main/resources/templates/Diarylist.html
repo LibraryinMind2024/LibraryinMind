@@ -11,9 +11,6 @@
     <thead class="thead-light">
     <tr class="text-center">
       <th scope="col">아이디</th>
-      <th scope="col">키워드 1</th>
-      <th scope="col">키워드 2</th>
-      <th scope="col">키워드 3</th>
       <th scope="col">작성일</th>
       <th scope="col">일기 사진</th>
     </tr>
@@ -25,15 +22,6 @@
         <span th:text="${diaryDto.id}"></span>
         </a>
       </th>
-      <td>
-          <span th:text="${diaryDto.keyword_1}"></span>
-      </td>
-      <td>
-        <span th:text="${diaryDto.keyword_2}"></span>
-      </td>
-      <td>
-        <span th:text="${diaryDto.keyword_3}"></span>
-      </td>
       <td>
         <span th:text="${#temporals.format(diaryDto.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
       </td>

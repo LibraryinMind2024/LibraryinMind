@@ -45,7 +45,7 @@ public class DiaryController {
 
     @GetMapping("/post")
     public String diary(){
-        return "Posting.html";
+        return "Posting";
     }
 
 

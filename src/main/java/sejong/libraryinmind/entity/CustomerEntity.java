@@ -2,6 +2,9 @@ package sejong.libraryinmind.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @NoArgsConstructor( access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -12,12 +15,15 @@ import lombok.*;
 public class CustomerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customer_id")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "customer_username", nullable = false)
+    @Column(name = "username", nullable = false)
     private String username;
 
-    @Column(name = "customer_password", nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DiaryEntity> diaries = new ArrayList<>();
 }

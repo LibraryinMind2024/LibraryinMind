@@ -19,34 +19,27 @@ import org.springframework.data.annotation.CreatedDate;
 public class DiaryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "diary_id")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "diary_keyword_1",length = 10, nullable = false)
-    private String keyword_1;
-
-    @Column(name = "diary_keyword_2",length = 10, nullable = false)
-    private String keyword_2;
-
-    @Column(name = "diary_keyword_3",length = 10, nullable = false)
-    private String keyword_3;
-
-    @Column(name = "diary_fileId",nullable = false)
+    @Column(name = "file_id",nullable = false)
     private Long fileId; //일기 사진
 
     @CreatedDate
-    @Column(name = "diary_date" , updatable = false)
+    @Column(name = "date" , updatable = false)
     private LocalDateTime createdDate;
 
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    private CustomerEntity customer;
+
     @Builder
-    public DiaryEntity(Long id, String keyword_1, String keyword_2, String keyword_3, Long fileId){
+    public DiaryEntity(Long id, Long fileId){
         this.id = id;
-        this.keyword_1 = keyword_1;
-        this.keyword_2 = keyword_2;
-        this.keyword_3 = keyword_3;
         this.fileId = fileId;
     }
 
-
-    //ToDo: 추천 도서 이미지, 소개 저장
+    public void setCustomer(CustomerEntity customer) {
+        this.customer = customer;
+    }
 }
