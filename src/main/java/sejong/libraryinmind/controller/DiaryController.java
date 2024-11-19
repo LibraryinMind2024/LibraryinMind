@@ -48,6 +48,10 @@ public class DiaryController {
         return "Posting";
     }
 
+    @GetMapping("/recommend")
+    public String recommend() {
+        return "recommend";
+    }
 
     @PostMapping ("/post")
     public String write(@RequestParam("file")MultipartFile files, DiaryDto diaryDto){
@@ -110,5 +114,7 @@ public class DiaryController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDto.getOrigFilename() + "\"")
                 .body(resource);
     }
+
+
 
 }

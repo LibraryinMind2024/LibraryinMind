@@ -1,5 +1,7 @@
 package sejong.libraryinmind.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +33,18 @@ public class CustomerController {
         return "main";
     }
 
+    @GetMapping("/main")
+    public String mainPage(Model model, HttpSession session) {
+        // 로그인된 사용자 이름 가져오기
+        String username = (String) session.getAttribute("username");
+        if (username != null) {
+            model.addAttribute("username", username);
+            return "main"; // main.html 반환
+        }
+        // 로그인되어 있지 않으면 로그인 페이지로 리다이렉트
+        return "redirect:/login";
+    }
+
     //회원가입 페이지 이동
     @RequestMapping("/signup")
     public String signup(Model model){
@@ -56,23 +70,33 @@ public class CustomerController {
         return "login";
     }
 
+
     // 로그인 처리
     @PostMapping("/login")
-    public String loginUser(@RequestParam String username, @RequestParam String password, Model model) {
+    public String loginUser(
+            @RequestParam String username,
+            @RequestParam String password,
+            HttpSession session,
+            Model model) {
+
         if (customerService.validateUser(username, password)) {
-            model.addAttribute("username", username);
-            return "main";  // 로그인 성공 시 환영 페이지로 이동
+            // 로그인 성공 시 세션에 사용자 이름 저장
+            session.setAttribute("username", username);
+
+            // 환영 페이지로 이동
+            return "redirect:/main";
         } else {
+            // 로그인 실패 시 에러 메시지 전달
             model.addAttribute("error", "아이디 또는 패스워드가 잘못 입력되었습니다.");
             return "login";
         }
     }
+
 
     @DeleteMapping("/customer/delete/{id}")
     public String customerDelete(@PathVariable Long id){
         this.customerService.delete(id);
         return "redirect:/customer";
     }
-
 
 }

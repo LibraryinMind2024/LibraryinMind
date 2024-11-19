@@ -1,5 +1,7 @@
 package sejong.libraryinmind.config;
 
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,6 +29,11 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable());
 
         return http.build();
+    }
+
+    @Bean
+    public Storage storage() {
+        return StorageOptions.getDefaultInstance().getService();
     }
 
 }
