@@ -130,7 +130,12 @@ public class DiaryController {
 //        return "Detail.html";
 //    }
 
+    @PostMapping ("/recommend")
+    public String SaveDiary(DiaryDto diaryDto, HttpSession session){
+        diaryService.saveDiary(diaryDto, session);
 
+        return "redirect:/my_library";
+    }
 
     @DeleteMapping("/post/{id}")
     public String delete(@PathVariable("id") Long id) {

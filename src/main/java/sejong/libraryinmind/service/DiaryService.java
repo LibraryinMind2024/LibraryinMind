@@ -2,6 +2,7 @@ package sejong.libraryinmind.service;
 
 
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,8 @@ import sejong.libraryinmind.entity.UserEntity;
 import sejong.libraryinmind.entity.DiaryEntity;
 import sejong.libraryinmind.repository.UserRepository;
 import sejong.libraryinmind.repository.DiaryRepository;
+import jakarta.servlet.http.HttpSession;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +20,7 @@ import java.util.List;
 @Service
 public class DiaryService {
 
+    @Autowired
     private UserRepository userRepository;
     private DiaryRepository diaryRepository;
     public DiaryService(DiaryRepository diaryRepository){
@@ -39,11 +43,15 @@ public class DiaryService {
     }
 
     @Transactional
-    public Long savePost(DiaryDto diaryDto) {
-        // 현재 로그인된 사용자의 username 가져오기
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+    public Long saveDiary(DiaryDto diaryDto, HttpSession session) {
+        // 세션에서 username 가져오기
+        String username = (String) session.getAttribute("username");
 
-        // username으로 CustomerEntity 조회
+        if (username == null) {
+            throw new IllegalStateException("User not logged in");
+        }
+
+        // username으로 UserEntity 조회
         UserEntity user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
