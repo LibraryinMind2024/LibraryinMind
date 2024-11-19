@@ -1,29 +1,29 @@
 package sejong.libraryinmind.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import sejong.libraryinmind.entity.CustomerEntity;
-import sejong.libraryinmind.service.CustomerService;
+import sejong.libraryinmind.entity.UserEntity;
+import sejong.libraryinmind.service.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 //CustomerRepository 속성을 포함하는 생성자를 자동으로 생성하는 것
 @Controller
-public class CustomerController {
+public class UserController {
 
-    private final CustomerService customerService;
+    private final UserService userService;
 
     @RequestMapping("/customer")
     //url과 customer 매핑
     public String list(Model model){
 
-        List<CustomerEntity> customerEntityList = this.customerService.getList();
-        model.addAttribute("customerEntityList", customerEntityList);
+        List<UserEntity> userEntityList = this.userService.getList();
+        model.addAttribute("customerEntityList", userEntityList);
 
         return  "Customer";
     }
@@ -37,10 +37,15 @@ public class CustomerController {
     public String mainPage(Model model, HttpSession session) {
         // 로그인된 사용자 이름 가져오기
         String username = (String) session.getAttribute("username");
-        if (username != null) {
+        String name = (String) session.getAttribute("name");
+
+        if (username != null && name != null) {
             model.addAttribute("username", username);
-            return "main"; // main.html 반환
+            model.addAttribute("name", name);
+
+            return "main";
         }
+
         // 로그인되어 있지 않으면 로그인 페이지로 리다이렉트
         return "redirect:/login";
     }
@@ -49,16 +54,16 @@ public class CustomerController {
     @RequestMapping("/signup")
     public String signup(Model model){
 
-        List<CustomerEntity> customerEntityList = this.customerService.getList();
-        model.addAttribute("customerEntityList", customerEntityList);
+        List<UserEntity> userEntityList = this.userService.getList();
+        model.addAttribute("customerEntityList", userEntityList);
 
         return  "signup";
     }
 
     //회원가입 처리
     @PostMapping("/signup/create")
-    public String customerCreate(@RequestParam String username, String password){
-        this.customerService.create(username,password);
+    public String customerCreate(@RequestParam String name, String username, String password){
+        this.userService.create(name,username,password);
 
         return "redirect:/signup";
     }
@@ -79,9 +84,14 @@ public class CustomerController {
             HttpSession session,
             Model model) {
 
-        if (customerService.validateUser(username, password)) {
-            // 로그인 성공 시 세션에 사용자 이름 저장
+        Optional<UserEntity> userOptional = userService.validateUser(username, password);
+
+        if (userOptional.isPresent()) {
+            UserEntity user = userOptional.get();
+
+            // 로그인 성공 시 세션에 사용자 이름과 name 저장
             session.setAttribute("username", username);
+            session.setAttribute("name", user.getName());  // name 필드도 저장
 
             // 환영 페이지로 이동
             return "redirect:/main";
@@ -105,7 +115,7 @@ public class CustomerController {
 
     @DeleteMapping("/customer/delete/{id}")
     public String customerDelete(@PathVariable Long id){
-        this.customerService.delete(id);
+        this.userService.delete(id);
         return "redirect:/customer";
     }
 

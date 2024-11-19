@@ -11,21 +11,21 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class DiaryDto {
     private Long id;
-    private Long fileId;
+    private String content;
     private LocalDateTime createdDate;
 
     public DiaryEntity toEntity(){
         DiaryEntity build = DiaryEntity.builder()
                 .id(id)
-                .fileId(fileId)
+                .content(content)
                 .build();
         return build;
     }
 
     @Builder
-    public DiaryDto(Long id,Long fileId, LocalDateTime createdDate){
+    public DiaryDto(Long id, String content, LocalDateTime createdDate){
         this.id = id;
-        this.fileId = fileId;
+        this.content = content;
         this.createdDate = createdDate;
     }
 

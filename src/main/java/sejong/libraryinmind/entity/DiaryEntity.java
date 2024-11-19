@@ -22,24 +22,28 @@ public class DiaryEntity {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "file_id",nullable = false)
-    private Long fileId; //일기 사진
-
     @CreatedDate
     @Column(name = "date" , updatable = false)
     private LocalDateTime createdDate;
 
+    @Lob
+    @Column(name = "content" , nullable = false)
+    private String content;
+
     @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
-    private CustomerEntity customer;
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
 
     @Builder
-    public DiaryEntity(Long id, Long fileId){
+    public DiaryEntity(Long id, String content){
         this.id = id;
-        this.fileId = fileId;
+        this.content = content;
     }
 
-    public void setCustomer(CustomerEntity customer) {
-        this.customer = customer;
+    //    @Column(name = "file_id",nullable = false)
+    //    private Long fileId; //일기 사진
+
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 }
