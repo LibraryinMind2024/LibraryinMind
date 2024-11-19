@@ -16,15 +16,24 @@
     <h1>일기 속 도서관</h1>
     <nav>
         <ul>
-            <li><a href="#">도서 추천</a></li>
-            <li><a href="my_library.html">도서함</a></li>
-            <li><a href="#">내 정보</a></li>
+            <li><a href="recommend">도서 추천</a></li>
+            <li><a href="my_library">도서함</a></li>
+            <li><a href="mypage">내 정보</a></li>
         </ul>
-
-        <button type="button" class="login-button" onClick="location.href='login.html'">로그인</button>
+        <!-- 로그인 상태에 따라 버튼 표시 -->
+        <div th:if="${username != null}">
+            <!-- 로그인된 상태에서 '로그아웃' 버튼 -->
+            <a href="/logout">로그아웃</a>
+        </div>
+        <div th:if="${username == null}">
+            <!-- 로그인되지 않은 상태에서 '로그인' 버튼 -->
+            <button type="button" class="login-button" onClick="location.href='/login'">로그인</button>
+        </div>
     </nav>
 </header>
-<!--            <p th:text="'안녕하세요, ' + ${username} + '님!'"></p>-->
+
+<p th:text="'안녕하세요, ' + ${username} + '님!'"></p>
+<h1>메인 페이지</h1>
 
 </body>
 </html>

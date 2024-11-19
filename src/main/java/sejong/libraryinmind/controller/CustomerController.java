@@ -92,6 +92,16 @@ public class CustomerController {
         }
     }
 
+    // 로그아웃 처리
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        // 세션에서 사용자 이름 제거
+        session.invalidate();  // 세션을 무효화하여 모든 속성 제거
+
+        // 로그인 페이지로 리다이렉트
+        return "redirect:/login";
+    }
+
 
     @DeleteMapping("/customer/delete/{id}")
     public String customerDelete(@PathVariable Long id){

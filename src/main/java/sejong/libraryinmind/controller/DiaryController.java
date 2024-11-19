@@ -1,5 +1,6 @@
 package sejong.libraryinmind.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -49,8 +50,26 @@ public class DiaryController {
     }
 
     @GetMapping("/recommend")
-    public String recommend() {
+    public String recommend(Model model, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        if (username != null) {
+            model.addAttribute("username", username);
+        }
         return "recommend";
+    }
+
+    @GetMapping("/my_library")
+    public String my_library(Model model, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        if (username != null) {
+            model.addAttribute("username", username);
+        }
+        return "my_library";
+    }
+
+    @GetMapping("/mypage")
+    public String mypage() {
+        return "mypage";
     }
 
     @PostMapping ("/post")
@@ -114,7 +133,4 @@ public class DiaryController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDto.getOrigFilename() + "\"")
                 .body(resource);
     }
-
-
-
 }
