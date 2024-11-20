@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import sejong.libraryinmind.dto.DiaryDto;
 import sejong.libraryinmind.dto.FileDto;
+import sejong.libraryinmind.entity.DiaryEntity;
 import sejong.libraryinmind.service.DiaryService;
 import sejong.libraryinmind.service.FileService;
 import sejong.libraryinmind.util.MD5Generator;
@@ -63,72 +64,44 @@ public class DiaryController {
         return "redirect:/login";
     }
 
+
     @GetMapping("/my_library")
-    public String my_library(Model model, HttpSession session) {
+    public String myLibrary(
+            @RequestParam(required = false) String date,
+            Model model,
+            HttpSession session
+    ) {
         String username = (String) session.getAttribute("username");
         String name = (String) session.getAttribute("name");
 
-        if (username != null && name != null) {
-            model.addAttribute("username", username);
-            model.addAttribute("name", name);
-
-            return "my_library";
+        if (username == null || name == null) {
+            return "redirect:/login";
         }
 
-        // 로그인되어 있지 않으면 로그인 페이지로 리다이렉트
-        return "redirect:/login";
+        model.addAttribute("username", username);
+        model.addAttribute("name", name);
+
+        // 날짜가 선택된 경우 일기 데이터를 가져옴
+        if (date != null) {
+            Long userId = (Long) session.getAttribute("id");
+            List<DiaryEntity> diaries = diaryService.getDiaryByDateAndUserId(date, userId);
+            model.addAttribute("diaries", diaries);
+
+            System.out.println("조회된 Diaries:");
+            for (DiaryEntity diary : diaries) {
+                System.out.println("내용: " + diary.getContent() + ", 작성일: " + diary.getCreatedDate());
+            }
+        }
+
+        return "my_library";
     }
+
 
     @GetMapping("/mypage")
     public String mypage() {
         return "mypage";
     }
 
-//    @PostMapping ("/post")
-//    public String write(@RequestParam("file")MultipartFile files, DiaryDto diaryDto){
-//        try {
-//            String origFilename = files.getOriginalFilename();
-//            String filename = new MD5Generator(origFilename).toString();
-//            /* 실행되는 위치의 'files' 폴더에 파일이 저장됩니다. */
-//            String savePath = System.getProperty("user.dir") + "/files";
-//
-//            /* 파일이 저장되는 폴더가 없으면 폴더를 생성합니다. */
-//            if (!new File(savePath).exists()) {
-//                try{
-//                    new File(savePath).mkdir();
-//                }
-//                catch(Exception e){
-//                    e.getStackTrace();
-//                }
-//            }
-//            String filePath = savePath + "/" + filename;
-//            files.transferTo(new File(filePath));
-//
-//            FileDto fileDto = new FileDto();
-//            fileDto.setOrigFilename(origFilename);
-//            fileDto.setFilename(filename);
-//            fileDto.setFilepath(filePath);
-//
-//            Long fileId = fileService.saveFile(fileDto);
-//            diaryDto.setFileId(fileId);
-//            diaryService.savePost(diaryDto);
-//
-//        }
-//        catch (Exception e){
-//            e.printStackTrace();
-//        }
-//        return "redirect:/";
-//    }
-//    @GetMapping("/post/{id}")
-//    public String detail(@PathVariable("id") Long id, Model model) {
-//        DiaryDto diaryDto = diaryService.getPost(id);
-//        model.addAttribute("post", diaryDto);
-//
-//        FileDto fileDto = fileService.getFile(diaryDto.getFileId());
-//        model.addAttribute("file",fileDto);
-//
-//        return "Detail.html";
-//    }
 
     @PostMapping ("/recommend")
     public String SaveDiary(DiaryDto diaryDto, HttpSession session){

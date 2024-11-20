@@ -1,4 +1,5 @@
 package sejong.libraryinmind.entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,5 +29,6 @@ public class UserEntity {
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore //순환 참조 방지
     private List<DiaryEntity> diaries = new ArrayList<>();
 }

@@ -27,28 +27,84 @@
 
 <h1>my_library 도서함 페이지</h1>
 
+<th:block th:each="diary : ${diaries}">
+    <li>
+        <!-- diary 속성에 맞게 수정 -->
+        <strong>Date:</strong> <span th:text="${diary.createdDate}">createdDate</span><br>
+        <strong>Title:</strong> <span th:text="${diary.id}">id</span><br>
+        <strong>Content:</strong> <span th:text="${diary.content}">content</span>
+    </li>
+</th:block>
 
 <!-- 날짜 선택 섹션 -->
 <div class="date-picker-container">
     <label for="diary-date">날짜 선택:</label>
     <input type="date" id="diary-date" name="diary-date">
     <button type="button" class="search-button" id="search-button">
-        <i class="fas fa-search"></i>
+        검색
     </button>
 </div>
 
+<!-- 일기 결과 출력 영역 -->
+<div id="diary-result"></div>
 
-<!-- 메인 섹션 -->
-<main class="main-container">
-    <!-- 나의 일기 섹션 -->
-    <section class="diary-section">
-        <h2>나의 일기</h2>
-        <div class="diary-content" id="diary-content">
-            여기에 일기 내용이 표시됩니다.
-        </div>
-    </section>
+<script>
+    document.getElementById("search-button").addEventListener("click", function () {
+        const selectedDate = document.getElementById("diary-date").value;
 
-</main>
+        // 날짜 선택 여부 체크
+        if (!selectedDate) {
+            alert("날짜를 선택해주세요.");
+            return;
+        }
+
+        // 서버에서 일기 데이터를 가져오기
+        fetch(`/my_library/api?date=${selectedDate}`)
+            .then(response => response.json())
+            .then(data => {
+                const resultDiv = document.getElementById("diary-result");
+                resultDiv.innerHTML = ""; // 기존 결과 초기화
+
+                // data가 배열인지 확인
+                if (!Array.isArray(data)) {
+                    resultDiv.innerHTML = "<p>일기 데이터 형식에 문제가 있습니다.</p>";
+                    return;
+                }
+
+                // 데이터가 없을 때 처리
+                if (data.length === 0) {
+                    resultDiv.innerHTML = "<p>일기가 없습니다.</p>";
+                } else {
+                    // 데이터를 화면에 표시
+                    data.forEach(diary => {
+                        const diaryElement = document.createElement("p");
+                        diaryElement.textContent = `내용: ${diary.content}, 작성일: ${diary.createdDate}`;
+                        resultDiv.appendChild(diaryElement);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching diary:", error);
+                const resultDiv = document.getElementById("diary-result");
+                resultDiv.innerHTML = "<p>일기를 가져오는 중에 오류가 발생했습니다.</p>";
+            });
+    });
+</script>
+
+
+
+
+<!--&lt;!&ndash; 메인 섹션 &ndash;&gt;-->
+<!--<main class="main-container">-->
+<!--    &lt;!&ndash; 나의 일기 섹션 &ndash;&gt;-->
+<!--    <section class="diary-section">-->
+<!--        <h2>나의 일기</h2>-->
+<!--        <div class="diary-content" id="diary-content">-->
+<!--            여기에 일기 내용이 표시됩니다.-->
+<!--        </div>-->
+<!--    </section>-->
+
+<!--</main>-->
 
 </body>
 </html>

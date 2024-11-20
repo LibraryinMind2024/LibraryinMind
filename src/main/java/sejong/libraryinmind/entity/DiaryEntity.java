@@ -43,6 +43,11 @@ public class DiaryEntity {
     //    @Column(name = "file_id",nullable = false)
     //    private Long fileId; //일기 사진
 
+    @Override
+    public String toString() {
+        return "DiaryEntity{id=" + id + ", createdDate=" + createdDate + ", content='" + content + "'}";
+    }
+
     public void setUser(UserEntity user) {
         this.user = user;
     }

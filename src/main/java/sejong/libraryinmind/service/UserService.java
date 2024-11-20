@@ -2,6 +2,7 @@ package sejong.libraryinmind.service;
 
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import sejong.libraryinmind.dto.DiaryDto;
 import sejong.libraryinmind.entity.UserEntity;
 
 import lombok.RequiredArgsConstructor;

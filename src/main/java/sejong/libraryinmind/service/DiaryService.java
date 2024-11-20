@@ -14,6 +14,9 @@ import sejong.libraryinmind.repository.DiaryRepository;
 import jakarta.servlet.http.HttpSession;
 
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +66,28 @@ public class DiaryService {
         return diaryRepository.save(diaryEntity).getId();
     }
 
+
+    public List<DiaryEntity> getDiaryByDateAndUserId(String date, Long userId) {
+        // 입력받은 날짜를 LocalDateTime으로 변환
+        LocalDate localDate = LocalDate.parse(date); // "2024-11-19" 형식 가정
+        LocalDateTime startOfDay = localDate.atStartOfDay();
+        LocalDateTime endOfDay = localDate.atTime(LocalTime.MAX);
+
+        // 날짜 범위 쿼리를 사용하여 데이터 조회
+        List<DiaryEntity> diaries = diaryRepository.findByCreatedDateBetweenAndUserId(startOfDay, endOfDay, userId);
+
+        // 결과 출력
+        if (diaries.isEmpty()) {
+            System.out.println("No diaries found for user " + userId + " on date " + date);
+        } else {
+            System.out.println("Found " + diaries.size() + " diaries for user " + userId + " on date " + date);
+            for (DiaryEntity diary : diaries) {
+                System.out.println(diary);
+            }
+        }
+
+        return diaries;
+    }
 
     @Transactional
     public DiaryDto getPost(Long id){

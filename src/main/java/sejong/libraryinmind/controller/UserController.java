@@ -91,7 +91,8 @@ public class UserController {
 
             // 로그인 성공 시 세션에 사용자 이름과 name 저장
             session.setAttribute("username", username);
-            session.setAttribute("name", user.getName());  // name 필드도 저장
+            session.setAttribute("name", user.getName());
+            session.setAttribute("id", user.getId());
 
             // 환영 페이지로 이동
             return "redirect:/main";
