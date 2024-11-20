@@ -29,7 +29,15 @@ public class UserController {
     }
 
     @RequestMapping("/")
-    public String root(){
+    public String root(Model model, HttpSession session){
+        // 로그인된 사용자 이름 가져오기
+        String username = (String) session.getAttribute("username");
+        String name = (String) session.getAttribute("name");
+
+        if (username != null && name != null) {
+            model.addAttribute("username", username);
+            model.addAttribute("name", name);
+        }
         return "main";
     }
 
@@ -42,17 +50,13 @@ public class UserController {
         if (username != null && name != null) {
             model.addAttribute("username", username);
             model.addAttribute("name", name);
-
-            return "main";
         }
-
-        // 로그인되어 있지 않으면 로그인 페이지로 리다이렉트
-        return "redirect:/login";
+        return "main";
     }
 
     //회원가입 페이지 이동
     @RequestMapping("/signup")
-    public String signup(Model model){
+    public String showSignup(Model model){
 
         List<UserEntity> userEntityList = this.userService.getList();
         model.addAttribute("customerEntityList", userEntityList);
@@ -71,7 +75,7 @@ public class UserController {
 
     // 로그인 페이지 이동
     @GetMapping("/login")
-    public String loginForm() {
+    public String showLogin() {
         return "login";
     }
 
@@ -113,11 +117,45 @@ public class UserController {
         return "redirect:/login";
     }
 
+    @GetMapping("/update")
+    public String showUpdate() {
+        return "update";
+    }
 
-    @DeleteMapping("/customer/delete/{id}")
-    public String customerDelete(@PathVariable Long id){
-        this.userService.delete(id);
-        return "redirect:/customer";
+
+    @GetMapping("/mypage")
+    public String showMypage(Model model, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        String name = (String) session.getAttribute("name");
+
+        if (username != null && name != null) {
+            model.addAttribute("username", username);
+            model.addAttribute("name", name);
+
+            return "mypage";
+        }
+
+        // 로그인되어 있지 않으면 로그인 페이지로 리다이렉트
+        return "redirect:/login";
+    }
+
+    @GetMapping("/password")
+    public String showPassword() {
+        return "password";
+    }
+
+    @PostMapping("/password")
+    public String password(Model model, HttpSession session, String password) {
+        String username = (String) session.getAttribute("username");
+
+        Optional<UserEntity> userOptional = userService.validateUser(username, password);
+
+        if (userOptional.isPresent()) {
+            return "redirect:/update";
+        } else {
+            model.addAttribute("error", "비밀번호가 잘못 입력되었습니다.");
+            return "password";
+        }
     }
 
 }

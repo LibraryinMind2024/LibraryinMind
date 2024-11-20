@@ -97,12 +97,6 @@ public class DiaryController {
     }
 
 
-    @GetMapping("/mypage")
-    public String mypage() {
-        return "mypage";
-    }
-
-
     @PostMapping ("/recommend")
     public String SaveDiary(DiaryDto diaryDto, HttpSession session){
         diaryService.saveDiary(diaryDto, session);

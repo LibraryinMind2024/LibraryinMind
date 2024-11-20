@@ -37,25 +37,37 @@ public class UserService {
         this.userRepository.save(userEntity);
     }
 
-//    public boolean validateUser(String username, String password) {
-//        return userRepository.findByUsername(username)
-//                .map(user -> passwordEncoder.matches(password, user.getPassword())) // 암호화된 비밀번호 검증
-//                .orElse(false);
-//    }
-
     public Optional<UserEntity> validateUser(String username, String password) {
         return userRepository.findByUsername(username)
                 .filter(user -> passwordEncoder.matches(password, user.getPassword()));
-        // 비밀번호 검증 후, 사용자 객체 반환
+        // 사용자 검증 후, 사용자 객체 반환
     }
 
 
-    @Transactional
-    public void delete(Long id){
-        UserEntity userEntity = userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 고객은 존재하지 않습니다. id = "+ id));
+    // 비밀번호 확인 후 이름, 아이디, 비밀번호 수정
+    public UserEntity updateUserDetails(Long userId, String currentPassword, String newName, String newUsername, String newPassword) {
+        // 사용자 조회
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        this.userRepository.delete(userEntity);
+        // 비밀번호 확인
+        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+            throw new IllegalArgumentException("Current password is incorrect");
+        }
+
+        // 비밀번호 암호화
+        String encodedNewPassword = passwordEncoder.encode(newPassword);
+
+        // Builder를 사용하여 새로운 UserEntity 객체 생성
+        UserEntity updatedUser = UserEntity.builder()
+                .id(user.getId())  // 기존 ID 유지
+                .name(newName)     // 새 이름 설정
+                .username(newUsername)  // 새 아이디 설정
+                .password(encodedNewPassword) // 새 비밀번호 설정
+                .build();
+
+        // 변경된 사용자 정보 저장
+        return userRepository.save(updatedUser);
     }
 
 }
