@@ -1,9 +1,23 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Update</title>
+    <script>
+        function validatePasswords() {
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirm-password").value;
+            const errorMessage = document.getElementById("error-message");
+
+            if (password !== confirmPassword) {
+                errorMessage.textContent = "비밀번호와 비밀번호 확인이 일치하지 않습니다. 다시 확인해주세요!";
+                return false; // 폼 제출을 막습니다.
+            } else {
+                errorMessage.textContent = "";
+                return true;
+            }
+        }
+    </script>
 </head>
 <body>
 <h1>회원 정보 수정하기</h1>
@@ -11,7 +25,7 @@
 <p th:text="'name: ' + ${user.name}"></p>
 <p th:text="'username: ' + ${user.username}"></p>
 
-<form action="/update" method="POST">
+<form action="/update" method="POST" onsubmit="return validatePasswords()">
     <label for="name">이름:</label>
     <input type="text" id="name" name="name" th:value="${user.name}" required><br><br>
 
@@ -20,6 +34,11 @@
 
     <label for="password">비밀번호:</label>
     <input type="password" id="password" name="password" required><br><br>
+
+    <label for="confirm-password">비밀번호 확인:</label>
+    <input type="password" id="confirm-password" name="confirm-password" required><br><br>
+
+    <div id="error-message" style="color: red;"></div>
 
     <button type="submit">수정하기</button>
 </form>

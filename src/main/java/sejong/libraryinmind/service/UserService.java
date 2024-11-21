@@ -64,18 +64,15 @@ public class UserService {
         userRepository.save(updatedUser); // 수정된 사용자 정보 저장
     }
 
-    // 로그인한 사용자 정보 가져오기
     public UserEntity getLoggedInUser() {
         return (UserEntity) session.getAttribute("user");
     }
 
-    // 로그인한 사용자의 이름 가져오기
     public String getLoggedInUsername() {
         UserEntity user = getLoggedInUser();
         return (user != null) ? user.getUsername() : null;
     }
 
-    // 로그인한 사용자의 이름 가져오기
     public String getLoggedInName() {
         UserEntity user = getLoggedInUser();
         return (user != null) ? user.getName() : null;
@@ -84,5 +81,4 @@ public class UserService {
         UserEntity user = getLoggedInUser();
         return (user != null) ? user.getId() : null;
     }
-
 }
