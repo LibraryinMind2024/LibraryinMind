@@ -1,5 +1,6 @@
 package sejong.libraryinmind.service;
 
+import jakarta.servlet.http.HttpSession;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import sejong.libraryinmind.dto.DiaryDto;
@@ -24,6 +25,9 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private HttpSession session;
+
     public List<UserEntity> getList(){
         return this.userRepository.findAll();
     }
@@ -42,32 +46,43 @@ public class UserService {
                 .filter(user -> passwordEncoder.matches(password, user.getPassword()));
         // 사용자 검증 후, 사용자 객체 반환
     }
+    public UserEntity getUserById(Long userId) {
+        return userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
+    }
 
+    public void updateUser(Long userId, String name, String username, String password) {
+        UserEntity user = getUserById(userId); // User 조회
 
-    // 비밀번호 확인 후 이름, 아이디, 비밀번호 수정
-    public UserEntity updateUserDetails(Long userId, String currentPassword, String newName, String newUsername, String newPassword) {
-        // 사용자 조회
-        UserEntity user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
-
-        // 비밀번호 확인
-        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
-            throw new IllegalArgumentException("Current password is incorrect");
-        }
-
-        // 비밀번호 암호화
-        String encodedNewPassword = passwordEncoder.encode(newPassword);
-
-        // Builder를 사용하여 새로운 UserEntity 객체 생성
+        // 빌더 패턴을 사용하여 객체 수정
         UserEntity updatedUser = UserEntity.builder()
-                .id(user.getId())  // 기존 ID 유지
-                .name(newName)     // 새 이름 설정
-                .username(newUsername)  // 새 아이디 설정
-                .password(encodedNewPassword) // 새 비밀번호 설정
+                .id(user.getId())
+                .name(name)
+                .username(username)
+                .password(passwordEncoder.encode(password)) // 암호화된 비밀번호
                 .build();
 
-        // 변경된 사용자 정보 저장
-        return userRepository.save(updatedUser);
+        userRepository.save(updatedUser); // 수정된 사용자 정보 저장
+    }
+
+    // 로그인한 사용자 정보 가져오기
+    public UserEntity getLoggedInUser() {
+        return (UserEntity) session.getAttribute("user");
+    }
+
+    // 로그인한 사용자의 이름 가져오기
+    public String getLoggedInUsername() {
+        UserEntity user = getLoggedInUser();
+        return (user != null) ? user.getUsername() : null;
+    }
+
+    // 로그인한 사용자의 이름 가져오기
+    public String getLoggedInName() {
+        UserEntity user = getLoggedInUser();
+        return (user != null) ? user.getName() : null;
+    }
+    public Long getLoggedInId() {
+        UserEntity user = getLoggedInUser();
+        return (user != null) ? user.getId() : null;
     }
 
 }

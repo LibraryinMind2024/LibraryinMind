@@ -28,7 +28,7 @@ public class UserEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user")
     @JsonIgnore //순환 참조 방지
     private List<DiaryEntity> diaries = new ArrayList<>();
 }

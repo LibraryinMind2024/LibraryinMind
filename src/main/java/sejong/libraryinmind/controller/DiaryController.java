@@ -1,6 +1,7 @@
 package sejong.libraryinmind.controller;
 
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -13,8 +14,10 @@ import org.springframework.web.multipart.MultipartFile;
 import sejong.libraryinmind.dto.DiaryDto;
 import sejong.libraryinmind.dto.FileDto;
 import sejong.libraryinmind.entity.DiaryEntity;
+import sejong.libraryinmind.entity.UserEntity;
 import sejong.libraryinmind.service.DiaryService;
 import sejong.libraryinmind.service.FileService;
+import sejong.libraryinmind.service.UserService;
 import sejong.libraryinmind.util.MD5Generator;
 
 import java.io.File;
@@ -27,6 +30,9 @@ import java.util.List;
 @Controller
 public class DiaryController {
     private DiaryService diaryService;
+
+    @Autowired
+    private UserService userService;
     private FileService fileService;
 
     public DiaryController(DiaryService diaryService, FileService fileService){
@@ -49,13 +55,12 @@ public class DiaryController {
     }
 
     @GetMapping("/recommend")
-    public String recommend(Model model, HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        String name = (String) session.getAttribute("name");
+    public String recommend(Model model) {
+        UserEntity user = userService.getLoggedInUser();
 
-        if (username != null && name != null) {
-            model.addAttribute("username", username);
-            model.addAttribute("name", name);
+        if (user != null) {
+            model.addAttribute("username", userService.getLoggedInUsername());
+            model.addAttribute("name", userService.getLoggedInName());
 
             return "recommend";
         }
@@ -68,22 +73,21 @@ public class DiaryController {
     @GetMapping("/my_library")
     public String myLibrary(
             @RequestParam(required = false) String date,
-            Model model,
-            HttpSession session
+            Model model
     ) {
-        String username = (String) session.getAttribute("username");
-        String name = (String) session.getAttribute("name");
 
-        if (username == null || name == null) {
+        UserEntity user = userService.getLoggedInUser();
+
+        if (user == null) {
             return "redirect:/login";
         }
 
-        model.addAttribute("username", username);
-        model.addAttribute("name", name);
+        model.addAttribute("username", userService.getLoggedInUsername());
+        model.addAttribute("name", userService.getLoggedInName());
 
         // 날짜가 선택된 경우 일기 데이터를 가져옴
         if (date != null) {
-            Long userId = (Long) session.getAttribute("id");
+            Long userId = userService.getLoggedInId();
             List<DiaryEntity> diaries = diaryService.getDiaryByDateAndUserId(date, userId);
             model.addAttribute("diaries", diaries);
 

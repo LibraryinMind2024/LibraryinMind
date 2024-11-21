@@ -29,28 +29,18 @@ public class UserController {
     }
 
     @RequestMapping("/")
-    public String root(Model model, HttpSession session){
-        // 로그인된 사용자 이름 가져오기
-        String username = (String) session.getAttribute("username");
-        String name = (String) session.getAttribute("name");
+    public String root(Model model){
+        model.addAttribute("username", userService.getLoggedInUsername());
+        model.addAttribute("name", userService.getLoggedInName());
 
-        if (username != null && name != null) {
-            model.addAttribute("username", username);
-            model.addAttribute("name", name);
-        }
         return "main";
     }
 
     @GetMapping("/main")
-    public String mainPage(Model model, HttpSession session) {
-        // 로그인된 사용자 이름 가져오기
-        String username = (String) session.getAttribute("username");
-        String name = (String) session.getAttribute("name");
+    public String mainPage(Model model) {
+        model.addAttribute("username", userService.getLoggedInUsername());
+        model.addAttribute("name", userService.getLoggedInName());
 
-        if (username != null && name != null) {
-            model.addAttribute("username", username);
-            model.addAttribute("name", name);
-        }
         return "main";
     }
 
@@ -66,7 +56,7 @@ public class UserController {
 
     //회원가입 처리
     @PostMapping("/signup/create")
-    public String customerCreate(@RequestParam String name, String username, String password){
+    public String Signup(@RequestParam String name, String username, String password){
         this.userService.create(name,username,password);
 
         return "redirect:/signup";
@@ -93,12 +83,9 @@ public class UserController {
         if (userOptional.isPresent()) {
             UserEntity user = userOptional.get();
 
-            // 로그인 성공 시 세션에 사용자 이름과 name 저장
-            session.setAttribute("username", username);
-            session.setAttribute("name", user.getName());
-            session.setAttribute("id", user.getId());
+            // 로그인 성공 시 세션에 user 객체 저장
+            session.setAttribute("user", user);
 
-            // 환영 페이지로 이동
             return "redirect:/main";
         } else {
             // 로그인 실패 시 에러 메시지 전달
@@ -117,24 +104,15 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @GetMapping("/update")
-    public String showUpdate() {
-        return "update";
-    }
-
-
     @GetMapping("/mypage")
-    public String showMypage(Model model, HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        String name = (String) session.getAttribute("name");
+    public String showMypage(Model model) {
+        UserEntity user = userService.getLoggedInUser();
 
-        if (username != null && name != null) {
-            model.addAttribute("username", username);
-            model.addAttribute("name", name);
-
+        if (user != null) {
+            model.addAttribute("username", user.getUsername());
+            model.addAttribute("name", user.getName());
             return "mypage";
         }
-
         // 로그인되어 있지 않으면 로그인 페이지로 리다이렉트
         return "redirect:/login";
     }
@@ -145,8 +123,8 @@ public class UserController {
     }
 
     @PostMapping("/password")
-    public String password(Model model, HttpSession session, String password) {
-        String username = (String) session.getAttribute("username");
+    public String password(Model model, String password) {
+        String username = userService.getLoggedInUsername();
 
         Optional<UserEntity> userOptional = userService.validateUser(username, password);
 
@@ -156,6 +134,30 @@ public class UserController {
             model.addAttribute("error", "비밀번호가 잘못 입력되었습니다.");
             return "password";
         }
+    }
+
+
+    @GetMapping("/update")
+    public String showUpdate(Model model) {
+        Long userId = userService.getLoggedInId();
+
+        UserEntity user = userService.getUserById(userId);
+        model.addAttribute("user", user);
+        return "update";
+    }
+
+    @PostMapping("/update")
+    public String updateUser(@RequestParam String name,
+                             @RequestParam String username,
+                             @RequestParam String password,
+                             HttpSession session) {
+
+        Long userId = userService.getLoggedInId();
+
+        userService.updateUser(userId, name, username, password); // UserService로 수정 요청
+
+        logout(session);
+        return "redirect:/login"; // 수정 후 리디렉션
     }
 
 }

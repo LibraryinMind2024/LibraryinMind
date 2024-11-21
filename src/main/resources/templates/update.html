@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,6 +7,22 @@
 </head>
 <body>
 <h1>회원 정보 수정하기</h1>
+
+<p th:text="'name: ' + ${user.name}"></p>
+<p th:text="'username: ' + ${user.username}"></p>
+
+<form action="/update" method="POST">
+    <label for="name">이름:</label>
+    <input type="text" id="name" name="name" th:value="${user.name}" required><br><br>
+
+    <label for="username">사용자명:</label>
+    <input type="text" id="username" name="username" th:value="${user.username}" required><br><br>
+
+    <label for="password">비밀번호:</label>
+    <input type="password" id="password" name="password" required><br><br>
+
+    <button type="submit">수정하기</button>
+</form>
 
 </body>
 </html>
