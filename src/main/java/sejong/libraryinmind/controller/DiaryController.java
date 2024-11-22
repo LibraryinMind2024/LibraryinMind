@@ -102,8 +102,10 @@ public class DiaryController {
 
 
     @PostMapping ("/recommend")
-    public String SaveDiary(DiaryDto diaryDto, HttpSession session){
-        diaryService.saveDiary(diaryDto, session);
+    public String SaveDiary(DiaryDto diaryDto){
+        UserEntity user = userService.getLoggedInUser();
+
+        diaryService.saveDiary(diaryDto, user);
 
         return "redirect:/my_library";
     }

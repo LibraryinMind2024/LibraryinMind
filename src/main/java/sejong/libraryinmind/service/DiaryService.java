@@ -46,17 +46,10 @@ public class DiaryService {
     }
 
     @Transactional
-    public Long saveDiary(DiaryDto diaryDto, HttpSession session) {
-        // 세션에서 username 가져오기
-        String username = (String) session.getAttribute("username");
-
-        if (username == null) {
+    public Long saveDiary(DiaryDto diaryDto, UserEntity user) {
+        if (user == null) {
             throw new IllegalStateException("User not logged in");
         }
-
-        // username으로 UserEntity 조회
-        UserEntity user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         // DiaryEntity 생성 및 customer 설정
         DiaryEntity diaryEntity = diaryDto.toEntity();

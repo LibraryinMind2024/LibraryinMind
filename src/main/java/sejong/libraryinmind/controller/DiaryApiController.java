@@ -28,6 +28,11 @@ public class DiaryApiController {
         String name = userService.getLoggedInName();
         Long userId = userService.getLoggedInId();
 
+        System.out.println(username);
+        System.out.println(name);
+        System.out.println(userId);
+
+
         if (username == null || name == null) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User not logged in");
         }
