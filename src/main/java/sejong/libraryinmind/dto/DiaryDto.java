@@ -12,21 +12,24 @@ import java.time.LocalDateTime;
 public class DiaryDto {
     private Long id;
     private String content;
+    private String imageUrl;
     private LocalDateTime createdDate;
 
     public DiaryEntity toEntity(){
         DiaryEntity build = DiaryEntity.builder()
                 .id(id)
                 .content(content)
+                .imageUrl(imageUrl)
                 .build();
         return build;
     }
 
     @Builder
-    public DiaryDto(Long id, String content, LocalDateTime createdDate){
+    public DiaryDto(Long id, String content, LocalDateTime createdDate, String imageUrl){
         this.id = id;
         this.content = content;
         this.createdDate = createdDate;
+        this.imageUrl = imageUrl;
     }
 
 }

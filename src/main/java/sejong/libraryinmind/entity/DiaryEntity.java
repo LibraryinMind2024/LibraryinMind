@@ -34,10 +34,14 @@ public class DiaryEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
+    @Column(name = "image_url", nullable = false)
+    private String imageUrl;
+
     @Builder
-    public DiaryEntity(Long id, String content){
+    public DiaryEntity(Long id, String content, String imageUrl){
         this.id = id;
         this.content = content;
+        this.imageUrl = imageUrl;
     }
 
     //    @Column(name = "file_id",nullable = false)
