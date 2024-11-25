@@ -10,7 +10,8 @@ openpyxl-3.1.5
 pure-iris-442113-n1-dbcba8f14b52.json
 .env
 venv
-venv/
+venv/lib/
+venv/pyvenv.cfg
 files
 
 ### STS ###
