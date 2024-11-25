@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            margin: 20px 0;
+        }
+        #preview {
+            margin-top: 20px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        .message {
+            margin-top: 20px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+<h1>Upload Your File</h1>
+<form id="uploadForm" enctype="multipart/form-data">
+    <label for="fileInput">Select File:</label>
+    <input type="file" id="fileInput" name="file" accept="image/*" required>
+    <button type="submit">Upload</button>
+</form>
+
+<div id="preview">
+    <h3>Preview:</h3>
+    <img id="previewImage" src="" alt="No image selected">
+</div>
+
+<div id="responseMessage" class="message"></div>
+
+<script>
+    const uploadForm = document.getElementById('uploadForm');
+    const fileInput = document.getElementById('fileInput');
+    const previewImage = document.getElementById('previewImage');
+    const responseMessage = document.getElementById('responseMessage');
+
+    // 파일 선택 시 미리보기
+    fileInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImage.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        } else {
+            previewImage.src = "";
+        }
+    });
+
+    // 폼 제출 이벤트 처리
+    uploadForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const file = fileInput.files[0];
+        if (!file) {
+            alert("Please select a file to upload.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const response = await fetch('/flask/upload', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkY' +
+                        'nJ1ZCIsImlhdCI6MTczMjUxMzgxNywiZXhwIjoxNzMyNTE3N' +
+                        'DE3fQ.SzYAhjBFOnxBsPpVP_VwKGssTOnwkgI_yDkD_aIEGqY' // JWT 토큰을 여기에 추가
+                },
+                body: formData
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                responseMessage.textContent = "File uploaded successfully!";
+                console.log(result);
+            } else {
+                const error = await response.json();
+                responseMessage.textContent = `Error: ${error.error || "Unknown error"}`;
+                responseMessage.style.color = 'red';
+            }
+        } catch (error) {
+            console.error("Error uploading file:", error);
+            responseMessage.textContent = "Error uploading file.";
+            responseMessage.style.color = 'red';
+        }
+    });
+</script>
+</body>
+</html>

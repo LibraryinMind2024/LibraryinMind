@@ -31,15 +31,6 @@ public class FlaskRestController {
     @Autowired
     private AuthService authService;
 
-
-    // Flask 서버에서 데이터 가져오기 (JSON 응답)
-    @GetMapping("/data")
-    public ResponseEntity<String> getDataFromFlask() {
-        String data = flaskService.getFlaskData();
-        return ResponseEntity.ok(data);
-    }
-
-    // Flask 서버로 이미지 업로드 요청 (JSON 응답)
     @PostMapping("/upload")
     public ResponseEntity<Map<String, Object>> uploadImageToFlask(
             @RequestParam("file") MultipartFile file,
@@ -63,5 +54,6 @@ public class FlaskRestController {
 
         return ResponseEntity.ok(response);
     }
+
 
 }

@@ -1,11 +1,6 @@
 package sejong.libraryinmind.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +10,6 @@ import sejong.libraryinmind.entity.UserEntity;
 import sejong.libraryinmind.service.DiaryService;
 import sejong.libraryinmind.service.UserService;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 @Controller
@@ -54,7 +45,7 @@ public class DiaryController {
             model.addAttribute("username", userService.getLoggedInUsername());
             model.addAttribute("name", userService.getLoggedInName());
 
-            return "urlTest";
+            return "upload";
         }
 
         // 로그인되어 있지 않으면 로그인 페이지로 리다이렉트

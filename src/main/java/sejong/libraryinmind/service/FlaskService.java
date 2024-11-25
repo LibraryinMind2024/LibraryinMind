@@ -18,13 +18,6 @@ public class FlaskService {
     private final RestTemplate restTemplate = new RestTemplate();
     private final String flaskUrl = "http://localhost:5000"; // Flask 서버 URL
 
-    // 데이터 가져오기 (예: /api/data 호출)
-    public String getFlaskData() {
-        String url = flaskUrl + "/api/data";
-        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
-        return response.getBody();
-    }
-
     public Map<String, Object> uploadAndProcessImage(MultipartFile file) throws IOException {
         // Flask 서버 URL 설정
         String url = flaskUrl + "/uploads";
