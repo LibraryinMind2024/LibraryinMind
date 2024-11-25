@@ -97,11 +97,11 @@ public class DiaryService {
         System.out.println(imageUrl);
         System.out.println(content);
 
-        if (content.length() > 300) {
-            content = content.substring(0, 300); // 300자 이상은 잘라서 저장
+        if (content.length() > 1000) {
+            content = content.substring(0, 1000); // 300자 이상은 잘라서 저장
         }
 
-        System.out.println("300자 제한------------------");
+        System.out.println("1000자 제한------------------");
 
         DiaryDto diaryDto = DiaryDto.builder()
                 .id(userId)
@@ -117,24 +117,4 @@ public class DiaryService {
         // DiaryEntity를 데이터베이스에 저장
         diaryRepository.save(diaryEntity);
     }
-
-
-
-    @Transactional
-    public DiaryDto getPost(Long id){
-        DiaryEntity diaryEntity = diaryRepository.findById(id).get();
-
-        DiaryDto diaryDto = DiaryDto.builder()
-                .id(diaryEntity.getId())
-                .createdDate(diaryEntity.getCreatedDate())
-                .build();
-
-        return diaryDto;
-    }
-
-    @Transactional
-    public void deletePost(Long id) {
-        diaryRepository.deleteById(id);
-    }
-
 }

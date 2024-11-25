@@ -27,7 +27,7 @@ public class DiaryEntity {
     private LocalDateTime createdDate;
 
     @Lob
-    @Column(name = "content" , nullable = false, length = 3000)
+    @Column(name = "content" , nullable = false, length = 1000)
     private String content;
 
     @ManyToOne
@@ -43,13 +43,9 @@ public class DiaryEntity {
         this.content = content;
         this.imageUrl = imageUrl;
     }
-
-    //    @Column(name = "file_id",nullable = false)
-    //    private Long fileId; //일기 사진
-
     @Override
     public String toString() {
-        return "DiaryEntity{id=" + id + ", createdDate=" + createdDate + ", content='" + content + "'}";
+        return "DiaryEntity{id=" + id + ", createdDate=" + createdDate +  "imageUrl"+ imageUrl + ", content='" + content + "'}";
     }
 
     public void setUser(UserEntity user) {

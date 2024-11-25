@@ -27,15 +27,6 @@
 
 <h1>my_library 도서함 페이지</h1>
 
-<th:block th:each="diary : ${diaries}">
-    <li>
-        <!-- diary 속성에 맞게 수정 -->
-        <strong>Date:</strong> <span th:text="${diary.createdDate}">createdDate</span><br>
-        <strong>Title:</strong> <span th:text="${diary.id}">id</span><br>
-        <strong>Content:</strong> <span th:text="${diary.content}">content</span>
-    </li>
-</th:block>
-
 <!-- 날짜 선택 섹션 -->
 <div class="date-picker-container">
     <label for="diary-date">날짜 선택:</label>
@@ -77,11 +68,26 @@
                 } else {
                     // 데이터를 화면에 표시
                     data.forEach(diary => {
-                        const diaryElement = document.createElement("p");
-                        diaryElement.textContent = `내용: ${diary.content}, 작성일: ${diary.createdDate}`;
+                        // 다이어리 내용 표시
+                        const diaryElement = document.createElement("div"); // div로 그룹화
+                        diaryElement.style.marginBottom = "20px";
+
+                        const contentElement = document.createElement("p");
+                        contentElement.textContent = `내용: ${diary.content}, 작성일: ${diary.createdDate}`;
+                        diaryElement.appendChild(contentElement);
+
+                        // 이미지 추가
+                        const imageElement = document.createElement("img");
+                        imageElement.src = diary.imageUrl; // diary의 imageUrl 사용
+                        imageElement.alt = "Diary Image";
+                        imageElement.style.maxWidth = "300px"; // 이미지 크기 조절
+                        imageElement.style.display = "block"; // 줄 바꿈
+                        diaryElement.appendChild(imageElement);
+
                         resultDiv.appendChild(diaryElement);
                     });
                 }
+
             })
             .catch(error => {
                 console.error("Error fetching diary:", error);
@@ -90,20 +96,6 @@
             });
     });
 </script>
-
-
-
-<!--&lt;!&ndash; 메인 섹션 &ndash;&gt;-->
-<!--<main class="main-container">-->
-<!--    &lt;!&ndash; 나의 일기 섹션 &ndash;&gt;-->
-<!--    <section class="diary-section">-->
-<!--        <h2>나의 일기</h2>-->
-<!--        <div class="diary-content" id="diary-content">-->
-<!--            여기에 일기 내용이 표시됩니다.-->
-<!--        </div>-->
-<!--    </section>-->
-
-<!--</main>-->
 
 </body>
 </html>

@@ -1,6 +1,5 @@
 package sejong.libraryinmind.controller;
 
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -11,11 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sejong.libraryinmind.dto.DiaryDto;
-import sejong.libraryinmind.dto.FileDto;
 import sejong.libraryinmind.entity.DiaryEntity;
 import sejong.libraryinmind.entity.UserEntity;
 import sejong.libraryinmind.service.DiaryService;
-import sejong.libraryinmind.service.FileService;
 import sejong.libraryinmind.service.UserService;
 
 import java.io.IOException;
@@ -30,11 +27,9 @@ public class DiaryController {
 
     @Autowired
     private UserService userService;
-    private FileService fileService;
 
-    public DiaryController(DiaryService diaryService, FileService fileService){
+    public DiaryController(DiaryService diaryService){
         this.diaryService = diaryService;
-        this.fileService = fileService;
     }
 
     @GetMapping("/diary")
@@ -90,7 +85,7 @@ public class DiaryController {
 
             System.out.println("조회된 Diaries:");
             for (DiaryEntity diary : diaries) {
-                System.out.println("내용: " + diary.getContent() + ", 작성일: " + diary.getCreatedDate());
+                System.out.println("내용: " + diary.getImageUrl() + ", 작성일: " + diary.getCreatedDate());
             }
         }
 
@@ -107,21 +102,4 @@ public class DiaryController {
         return "redirect:/my_library";
     }
 
-
-    @DeleteMapping("/post/{id}")
-    public String delete(@PathVariable("id") Long id) {
-        diaryService.deletePost(id);
-        return "redirect:/";
-    }
-
-    @GetMapping("/download/{fileId}")
-    public ResponseEntity<Resource> fileDownload(@PathVariable("fileId") Long fileId) throws IOException {
-        FileDto fileDto = fileService.getFile(fileId);
-        Path path = Paths.get(fileDto.getFilepath());
-        Resource resource = new InputStreamResource(Files.newInputStream(path));
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType("application/octet-stream"))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDto.getOrigFilename() + "\"")
-                .body(resource);
-    }
 }
