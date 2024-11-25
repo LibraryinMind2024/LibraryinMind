@@ -38,6 +38,13 @@
     <img id="previewImage" src="" alt="No image selected">
 </div>
 
+<!-- 오늘의 일기 -->
+<div class="today-diary">
+    <h2>오늘의 일기</h2>
+    <textarea id="diary-text" placeholder="오늘의 하루는 어땠나요?" readonly></textarea>
+    <p id="image-url" style="word-wrap: break-word; color: blue; cursor: pointer;"></p> <!-- 이미지 URL 표시 -->
+</div>
+
 <div id="responseMessage" class="message"></div>
 
 <script>
@@ -45,6 +52,7 @@
     const fileInput = document.getElementById('fileInput');
     const previewImage = document.getElementById('previewImage');
     const responseMessage = document.getElementById('responseMessage');
+    const diaryText = document.getElementById('diary-text');
 
     // 파일 선택 시 미리보기
     fileInput.addEventListener('change', (event) => {
@@ -88,6 +96,8 @@
                 const result = await response.json();
                 responseMessage.textContent = "File uploaded successfully!";
                 console.log(result);
+                diaryText.value = result.ocr_text || 'OCR 처리 실패';
+
             } else {
                 const error = await response.json();
                 responseMessage.textContent = `Error: ${error.error || "Unknown error"}`;
