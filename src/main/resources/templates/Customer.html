@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Customer</title>
+</head>
+<body>
+<h1>회원 정보</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>닉네임</th>
+        <th>비밀번호</th>
+        <th>삭제</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:block th:each="customerentity : ${userEntityList}">
+        <td th:text="${customerentity.id}"></td>
+        <td th:text="${customerentity.username}"></td>
+        <td th:text="${customerentity.password}"></td>
+        <td><button th:attr="onclick='deleteItem(' + ${customerentity.id} + ')'">삭제</button></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    function deleteItem(id){
+        console.log(id);
+        const url = "/customer/delete/" + id;
+        $.ajax({
+            type: 'delete',
+            url: url,
+            contentType: 'application/json; charset=utf-8'
+        }).done(function() {
+            alert('회원이 삭제되었습니다.');
+            window.location.href = '/';
+        }).fail(function(error) {
+            alert(JSON.stringify(error));
+        });
+    }
+</script>
+</html>

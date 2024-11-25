@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>게시판 - 목록</title>
+  <link rel="stylesheet" href="/webjars/bootstrap/4.5.0/css/bootstrap.min.css" />
+</head>
+<body>
+<div class="container">
+  <table class="table">
+    <thead class="thead-light">
+    <tr class="text-center">
+      <th scope="col">아이디</th>
+      <th scope="col">작성일</th>
+      <th scope="col">일기 사진</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:block th:each="diaryDto : ${diaryDtoList}">
+      <th scope="row">
+        <a th:href="@{'/post/' + ${diaryDto.id}}">
+        <span th:text="${diaryDto.id}"></span>
+        </a>
+      </th>
+      <td>
+        <span th:text="${#temporals.format(diaryDto.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div class="row">
+    <div class="col-auto mr-auto"></div>
+    <div class="col-auto">
+      <a class="btn btn-primary" th:href="@{/post}" role="button">일기 쓰기</a>
+    </div>
+  </div>
+</div>
+<script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
+<script src="/webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>

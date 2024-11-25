@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/webjars/bootstrap/4.5.0/css/bootstrap.min.css" />
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <p class="card-text">
+                <small
+                        class="text-muted"
+                        th:text="${#temporals.format(post.createdDate, 'yyyy-MM-dd HH:mm')}"
+                ></small>
+            </p>
+            <p class="card-text" th:text="${post.keyword_1}"></p>
+            <p class="card-text" th:text="${post.keyword_2}"></p>
+            <p class="card-text" th:text="${post.keyword_3}"></p>
+            <div th:if="${post.fileId != null}">
+                <strong>첨부파일 : </strong>
+                <a
+                        class="card-text"
+                        th:href="@{'/download/' + ${post.fileId}}"
+                        th:text="${file.origFilename}"
+                ></a>
+            </div>
+            <!-- Todo : 이미지 불러오기
+            <img th:src="@{'../files/' + ${file.filename}}" />
+
+            <p>원래 파일 이름: <span th:text="${file.origFilename}"></span></p>
+            -->
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-auto">
+            <form id="delete-form" th:action="@{'/post/' + ${post.id}}" method="post">
+                <input type="hidden" name="_method" value="delete" />
+                <button id="delete-btn" type="submit" class="btn btn-danger">삭제</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
+<script src="/webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>

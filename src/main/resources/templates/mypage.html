@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내 정보 입력</title>
+    <link rel="stylesheet" href="mypage.css">
+</head>
+<body>
+<header>
+    <img src="../notebook_icon.png" alt="Notebook Icon">
+    <a href="main"><h1>일기 속 도서관</h1></a>
+    <nav>
+        <ul>
+            <li><a href="recommend">도서 추천</a></li>
+            <li><a href="my_library">도서함</a></li>
+            <li><a href="mypage">내 정보</a></li>
+        </ul>
+    </nav>
+</header>
+
+<p th:text="'name: ' + ${name} "></p>
+<p th:text="'username: ' + ${username} "></p>
+
+<li><a href="password">내 정보 수정하기</a></li>
+
+</body>
+</html>
