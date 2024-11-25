@@ -13,7 +13,7 @@ import re
 import uuid
 
 # Flask 애플리케이션 초기화
-app = Flask(__name__)
+app = Flask(__name__, static_folder="static", template_folder="templates")
 CORS(app)
 load_dotenv()
 
@@ -30,6 +30,14 @@ option_to_file = {
     "어린이 교양": ("refinement_titles.json", "refinement_detailed.json"),
     "어린이 만화": ("cartoon_titles.json", "cartoon_detailed.json")
 }
+
+path = "/Users/choeyugyeong/Desktop/LibraryinMind_backend/src/main/resources/"
+
+# 경로가 존재하는지 확인합니다.
+if os.path.exists(path):
+    print(f"{path} exists.")
+else:
+    print(f"{path} does not exist.")
 
 
 def allowed_file(filename):
@@ -180,36 +188,27 @@ def upload_and_process_image():
             print("Error: No file selected")
             return jsonify({'error': 'No selected file'}), 400
 
-        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-        print("Headers:", request.headers)
-        print("Files:", request.files)
-        print("Form:", request.form)
-        print("search:", request.form.get('search-option'))
-        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-
-
         # 선택된 옵션에 따라 파일 경로 설정
         search_option = request.form.get('search-option')
         if not search_option or search_option not in option_to_file:
             print("Error: Invalid search option")
             return jsonify({'error': 'Invalid search option'}), 400
 
-        titles_file, detailed_file = option_to_file[search_option]
+        # option_to_file[search_option]이 튜플이므로, 첫 번째 값과 두 번째 값을 각각 결합합니다.
+        titles_file, detailed_file = path + option_to_file[search_option][0], path + option_to_file[search_option][1]
 
-        print("!!!!!!!!!!!!!!!!!!!!!!!!!")
+        print("!!!!!!!!!!!!!!!!!!!!!!!")
         print(f"titles_file: {titles_file}")
         print(f"detailed_file: {detailed_file}")
-        print(os.path.exists(titles_file))
-        print(os.path.exists(detailed_file))
-        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
         print("Current Working Directory:", os.getcwd())
         print("titles_file exists:", os.path.exists(titles_file))
         print("detailed_file exists:", os.path.exists(detailed_file))
-        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
 
         print("titles_file absolute path:", os.path.abspath(titles_file))
         print("detailed_file absolute path:", os.path.abspath(detailed_file))
+
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
 
 # 책 목록 및 세부 정보 로드
