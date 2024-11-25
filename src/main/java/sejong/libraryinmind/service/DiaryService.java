@@ -97,9 +97,6 @@ public class DiaryService {
         System.out.println(imageUrl);
         System.out.println(content);
 
-        if (content.length() > 1000) {
-            content = content.substring(0, 1000); // 300자 이상은 잘라서 저장
-        }
 
         System.out.println("1000자 제한------------------");
 

@@ -34,6 +34,7 @@ public class FlaskRestController {
     @PostMapping("/upload")
     public ResponseEntity<Map<String, Object>> uploadImageToFlask(
             @RequestParam("file") MultipartFile file,
+            @RequestParam("search-option") String searchOption,
             @RequestHeader("Authorization") String authorizationHeader) throws IOException {
 
         // JWT 토큰에서 username을 추출하여 사용자 인증
@@ -47,7 +48,9 @@ public class FlaskRestController {
         Long userId = user.getId();  // 인증된 사용자 정보 사용
 
         // Flask 응답에서 받은 JSON 데이터를 Map으로 받기
-        Map<String, Object> response = flaskService.uploadAndProcessImage(file);
+        Map<String, Object> response = flaskService.uploadAndProcessImage(file, searchOption);
+
+        System.out.println(response);
 
         // Flask 데이터로 DiaryEntity 저장
         diaryService.saveDiaryFromFlaskData(response, user, userId);

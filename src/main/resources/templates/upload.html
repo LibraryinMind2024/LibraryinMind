@@ -4,39 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File Upload</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        form {
-            margin: 20px 0;
-        }
-        #preview {
-            margin-top: 20px;
-        }
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-        .message {
-            margin-top: 20px;
-            color: green;
-        }
-    </style>
+
 </head>
 <body>
 <h1>Upload Your File</h1>
 <form id="uploadForm" enctype="multipart/form-data">
     <label for="fileInput">Select File:</label>
     <input type="file" id="fileInput" name="file" accept="image/*" required>
-    <button type="submit">Upload</button>
 </form>
 
 <div id="preview">
     <h3>Preview:</h3>
     <img id="previewImage" src="" alt="No image selected">
 </div>
+
+<!-- 검색 옵션 섹션 -->
+<div class="keyword-section" enctype="multipart/form-data">
+    <h2>도서 분야</h2>
+    <form>
+        <label>
+            <input type="radio" name="search-option" value="어린이 전체" checked>
+            어린이 전체
+        </label>
+        <label>
+            <input type="radio" name="search-option" value="어린이 문학">
+            어린이 문학
+        </label>
+        <label>
+            <input type="radio" name="search-option" value="어린이 교양">
+            어린이 교양
+        </label>
+        <label>
+            <input type="radio" name="search-option" value="어린이 만화">
+            어린이 만화
+        </label>
+    </form>
+    <button type="submit">추천받기</button>
+</div>
+
+
 
 <!-- 오늘의 일기 -->
 <div class="today-diary">
@@ -46,6 +52,47 @@
 </div>
 
 <div id="responseMessage" class="message"></div>
+
+
+<!-- 추천 도서 섹션 -->
+<div class="recommendation">
+    <h2>추천 도서</h2>
+    <div class="recommendation-row">
+        <!-- 첫 번째 도서 -->
+        <div class="book" id="book1">
+            <img id="book-image1" src="{{ url_for('static', filename='BOOK.png') }}" alt="Book Image 1">
+            <div class="book-info">
+                <h3 id="book-title1"><a href="#" target="_blank" id="book-link1">도서 제목</a></h3>
+
+                <p id="book-author1"></p>
+                <div id="book-summary1" class="summary-box">추천도서가 표시됩니다</div>
+            </div>
+        </div>
+
+        <!-- 두 번째 도서 -->
+        <div class="book" id="book2">
+            <img id="book-image2" src="{{ url_for('static', filename='BOOK.png') }}" alt="Book Image 2">
+            <div class="book-info">
+                <h3 id="book-title2"><a href="#" target="_blank" id="book-link2">도서 제목</a></h3>
+
+                <p id="book-author2"></p>
+                <div id="book-summary2" class="summary-box">추천도서가 표시됩니다</div>
+            </div>
+        </div>
+
+        <!-- 세 번째 도서 -->
+        <div class="book" id="book3">
+            <img id="book-image3" src="{{ url_for('static', filename='BOOK.png') }}" alt="Book Image 3">
+            <div class="book-info">
+                <h3 id="book-title3"><a href="#" target="_blank" id="book-link3">도서 제목</a></h3>
+
+                <p id="book-author3"></p>
+                <div id="book-summary3" class="summary-box">추천도서가 표시됩니다</div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script>
     const uploadForm = document.getElementById('uploadForm');
@@ -77,17 +124,21 @@
             alert("Please select a file to upload.");
             return;
         }
+        const selectedOption = document.querySelector('input[name="search-option"]:checked').value;
+        console.log(`선택된 옵션: ${selectedOption}`);
+
 
         const formData = new FormData();
         formData.append('file', file);
+        formData.append('search-option', selectedOption);
 
         try {
             const response = await fetch('/flask/upload', {
                 method: 'POST',
                 headers: {
-                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkY' +
-                        'nJ1ZCIsImlhdCI6MTczMjUxMzgxNywiZXhwIjoxNzMyNTE3N' +
-                        'DE3fQ.SzYAhjBFOnxBsPpVP_VwKGssTOnwkgI_yDkD_aIEGqY' // JWT 토큰을 여기에 추가
+                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYnJ1ZCI' +
+                        'sImlhdCI6MTczMjU0MDIyOCwiZXhwIjoxNzMyNTQzODI4fQ.9D' +
+                        'IZmWX7dZ9wupTksmuSdjVXnruu5Ek-NmSU9Ft_gRw' // JWT 토큰을 여기에 추가
                 },
                 body: formData
             });
@@ -97,6 +148,9 @@
                 responseMessage.textContent = "File uploaded successfully!";
                 console.log(result);
                 diaryText.value = result.ocr_text || 'OCR 처리 실패';
+
+
+                // 책 정보 띄우기
 
             } else {
                 const error = await response.json();

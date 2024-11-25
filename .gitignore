@@ -12,6 +12,9 @@ pure-iris-442113-n1-dbcba8f14b52.json
 venv
 venv/lib/
 venv/pyvenv.cfg
+newvenv
+newvenv/lib/
+newvenv/pyvenv.cfg
 files
 
 ### STS ###

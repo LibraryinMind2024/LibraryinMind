@@ -19,14 +19,7 @@ public class FlaskController {
 
     // 업로드 결과를 HTML로 표시
     @GetMapping("/upload")
-    public String uploadImageToFlask() throws IOException {
-//        Map<String, Object> response = flaskService.uploadAndProcessImage(file);
-
-//        String image_url = response.get("image_url").toString();
-//        String content = response.get("ocr_text").toString();
-//
-//        model.addAttribute("imageUrl", image_url);
-//        model.addAttribute("ocrText", content);
+    public String showUpload()  {
         return "upload"; // result.html 템플릿으로 이동
     }
 }
