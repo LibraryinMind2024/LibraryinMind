@@ -11,8 +11,6 @@ pure-iris-442113-n1-dbcba8f14b52.json
 .env
 venv
 venv/
-!**/venv/
-!**/files/
 files
 
 ### STS ###
