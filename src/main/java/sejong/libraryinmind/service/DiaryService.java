@@ -12,6 +12,8 @@ import sejong.libraryinmind.entity.DiaryEntity;
 import sejong.libraryinmind.repository.UserRepository;
 import sejong.libraryinmind.repository.DiaryRepository;
 import jakarta.servlet.http.HttpSession;
+import java.util.Map;
+
 
 
 import java.time.LocalDate;
@@ -81,6 +83,42 @@ public class DiaryService {
 
         return diaries;
     }
+
+    @Transactional
+    public void saveDiaryFromFlaskData(Map<String, Object> flaskData, UserEntity user, Long userId) {
+        if (user == null) {
+            throw new IllegalStateException("User not logged in");
+        }
+
+        // JSON 데이터에서 이미지 URL과 OCR 텍스트 추출
+        String imageUrl = (String) flaskData.get("image_url");
+        String content = (String) flaskData.get("ocr_text");
+
+        System.out.println(imageUrl);
+        System.out.println(content);
+
+        if (content.length() > 300) {
+            content = content.substring(0, 300); // 300자 이상은 잘라서 저장
+        }
+
+        System.out.println("300자 제한------------------");
+
+        DiaryDto diaryDto = DiaryDto.builder()
+                .id(userId)
+                .content(content)
+                .imageUrl(imageUrl)
+                .build();
+
+        DiaryEntity diaryEntity = diaryDto.toEntity();
+        diaryEntity.setUser(user);
+
+        System.out.println("setUser------------------");
+
+        // DiaryEntity를 데이터베이스에 저장
+        diaryRepository.save(diaryEntity);
+    }
+
+
 
     @Transactional
     public DiaryDto getPost(Long id){

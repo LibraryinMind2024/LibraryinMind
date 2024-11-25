@@ -27,7 +27,7 @@ public class DiaryEntity {
     private LocalDateTime createdDate;
 
     @Lob
-    @Column(name = "content" , nullable = false)
+    @Column(name = "content" , nullable = false, length = 3000)
     private String content;
 
     @ManyToOne

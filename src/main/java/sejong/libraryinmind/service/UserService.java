@@ -46,6 +46,11 @@ public class UserService {
                 .filter(user -> passwordEncoder.matches(password, user.getPassword()));
         // 사용자 검증 후, 사용자 객체 반환
     }
+    // 사용자 이름으로 사용자 찾기
+    public Optional<UserEntity> findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
     public UserEntity getUserById(Long userId) {
         return userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
     }

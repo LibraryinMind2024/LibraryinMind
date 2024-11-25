@@ -1,6 +1,6 @@
 package sejong.libraryinmind.controller;
 
-import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import sejong.libraryinmind.dto.DiaryDto;
 import sejong.libraryinmind.dto.FileDto;
 import sejong.libraryinmind.entity.DiaryEntity;
@@ -18,9 +17,7 @@ import sejong.libraryinmind.entity.UserEntity;
 import sejong.libraryinmind.service.DiaryService;
 import sejong.libraryinmind.service.FileService;
 import sejong.libraryinmind.service.UserService;
-import sejong.libraryinmind.util.MD5Generator;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -62,7 +59,7 @@ public class DiaryController {
             model.addAttribute("username", userService.getLoggedInUsername());
             model.addAttribute("name", userService.getLoggedInName());
 
-            return "recommend";
+            return "urlTest";
         }
 
         // 로그인되어 있지 않으면 로그인 페이지로 리다이렉트
@@ -109,6 +106,7 @@ public class DiaryController {
 
         return "redirect:/my_library";
     }
+
 
     @DeleteMapping("/post/{id}")
     public String delete(@PathVariable("id") Long id) {

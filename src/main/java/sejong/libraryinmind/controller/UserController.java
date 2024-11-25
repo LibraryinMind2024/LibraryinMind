@@ -2,13 +2,18 @@ package sejong.libraryinmind.controller;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sejong.libraryinmind.entity.UserEntity;
 import sejong.libraryinmind.service.UserService;
+import sejong.libraryinmind.util.JwtTokenProvider;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -17,6 +22,7 @@ import java.util.Optional;
 public class UserController {
 
     private final UserService userService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @RequestMapping("/customer")
     //url과 customer 매핑
@@ -71,26 +77,38 @@ public class UserController {
 
 
     // 로그인 처리
+
     @PostMapping("/login")
-    public String loginUser(
+    public ResponseEntity<?> loginUser(
             @RequestParam String username,
             @RequestParam String password,
-            HttpSession session,
-            Model model) {
+            HttpSession session) {
 
         Optional<UserEntity> userOptional = userService.validateUser(username, password);
 
         if (userOptional.isPresent()) {
             UserEntity user = userOptional.get();
 
-            // 로그인 성공 시 세션에 user 객체 저장
+            // JWT 생성
+            String token = jwtTokenProvider.createToken(user.getUsername());
+
+
+            // 세션에 사용자 정보 저장
             session.setAttribute("user", user);
 
-            return "redirect:/main";
+            // 응답에 토큰 포함
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "로그인 성공");
+            response.put("userId", user.getId());
+            response.put("username", user.getUsername());
+            response.put("token", token);
+
+            return ResponseEntity.ok(response);
         } else {
-            // 로그인 실패 시 에러 메시지 전달
-            model.addAttribute("error", "아이디 또는 패스워드가 잘못 입력되었습니다.");
-            return "login";
+            // 실패 메시지 반환
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of(
+                    "message", "아이디 또는 패스워드가 잘못 입력되었습니다."
+            ));
         }
     }
 

@@ -12,4 +12,5 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/files/**")
                 .addResourceLocations("file:/Users/choeyugyeong/Desktop/LibraryinMind_backend"); // 실제 파일이 저장된 경로
     }
+
 }

@@ -26,7 +26,8 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .anyRequest().permitAll() // 모든 요청에 대해 인증 없이 접근 가능
                 .and()
-                .csrf(csrf -> csrf.disable());
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.disable());
 
         return http.build();
     }
