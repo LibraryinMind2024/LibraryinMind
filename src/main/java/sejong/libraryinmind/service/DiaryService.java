@@ -10,6 +10,7 @@ import sejong.libraryinmind.entity.UserEntity;
 import sejong.libraryinmind.entity.DiaryEntity;
 import sejong.libraryinmind.repository.UserRepository;
 import sejong.libraryinmind.repository.DiaryRepository;
+import sejong.libraryinmind.repository.BookRepository;
 
 import java.util.Map;
 
@@ -27,6 +28,10 @@ public class DiaryService {
     @Autowired
     private UserRepository userRepository;
     private DiaryRepository diaryRepository;
+
+    @Autowired
+    private BookRepository bookRepository;
+
     public DiaryService(DiaryRepository diaryRepository){
         this.diaryRepository = diaryRepository;
     }
@@ -69,6 +74,13 @@ public class DiaryService {
 
         // 날짜 범위 쿼리를 사용하여 데이터 조회
         List<DiaryEntity> diaries = diaryRepository.findByCreatedDateBetweenAndUserId(startOfDay, endOfDay, userId);
+
+        // 각 일기에 해당하는 책 정보를 가져옴
+        for (DiaryEntity diary : diaries) {
+            // 일기와 연결된 책 정보 조회
+            BookEntity book = bookRepository.findByDiary(diary); // findByDiary 사용
+            diary.setBook(book); // 일기 엔티티에 책 정보를 설정
+        }
 
         // 결과 출력
         if (diaries.isEmpty()) {

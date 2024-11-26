@@ -23,14 +23,18 @@ public class BookService {
         DiaryEntity diary = diaryRepository.findById(diaryId)
                 .orElseThrow(() -> new IllegalArgumentException("Diary not found for ID: " + diaryId));
 
+
         // BookEntity 생성
         BookEntity book = BookEntity.builder()
                 .title((String) bookData.get("title"))
                 .author(((String) bookData.get("author")).replace("저자: ", "")) // "저자: " 제거
-                .summary((String) bookData.get("summary"))
+                .summary(((String) bookData.get("summary")).length() > 200
+                        ? ((String) bookData.get("summary")).substring(0, 200)
+                        : (String) bookData.get("summary")) // summary가 200자 초과 시 200자까지만 저장
                 .bookImage((String) bookData.get("bookImage"))
                 .bookLink((String) bookData.get("bookLink"))
                 .build();
+
 
         // Diary와 연관 관계 설정
         book.setDiaryId(diary);

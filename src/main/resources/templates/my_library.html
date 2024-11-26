@@ -84,6 +84,23 @@
                         imageElement.style.display = "block"; // 줄 바꿈
                         diaryElement.appendChild(imageElement);
 
+                        // 책 정보 표시
+                        if (diary.book) {
+                            const bookElement = document.createElement("p");
+                            bookElement.textContent = `책 제목: ${diary.book.title}, 저자: ${diary.book.author}`;
+                            diaryElement.appendChild(bookElement);
+
+                            // 책 이미지 표시
+                            const bookImageElement = document.createElement("img");
+                            bookImageElement.src = diary.book.bookImage; // book의 bookImage 사용
+                            bookImageElement.alt = "Book Image";
+                            bookImageElement.style.maxWidth = "100px"; // 책 이미지 크기 조절
+                            bookImageElement.style.display = "block"; // 줄 바꿈
+                            diaryElement.appendChild(bookImageElement);
+                        }
+
+
+
                         resultDiv.appendChild(diaryElement);
                     });
                 }

@@ -77,6 +77,10 @@ public class DiaryController {
             System.out.println("조회된 Diaries:");
             for (DiaryEntity diary : diaries) {
                 System.out.println("내용: " + diary.getImageUrl() + ", 작성일: " + diary.getCreatedDate());
+
+                if (diary.getBook() != null) {
+                    System.out.println("책 제목: " + diary.getBook().getTitle());
+                }
             }
         }
 

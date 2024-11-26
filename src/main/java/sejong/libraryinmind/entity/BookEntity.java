@@ -1,4 +1,6 @@
 package sejong.libraryinmind.entity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,6 +33,7 @@ public class BookEntity {
     private String bookLink;
 
     @OneToOne(fetch = FetchType.LAZY)
+    @JsonIgnore  // 직렬화에서 제외
     @JoinColumn(name = "diary_id", referencedColumnName = "id", unique = true, foreignKey = @ForeignKey(name = "fk_diary"))
     private DiaryEntity diary;
 
