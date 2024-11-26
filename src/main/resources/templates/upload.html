@@ -4,40 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File Upload</title>
+    <link rel="stylesheet" href="/css/recommend.css">
+
 </head>
 <body>
-<h1>Upload Your File</h1>
+
+
+<header>
+    <img src="{{ url_for('static', filename='notebook_icon.png') }}" alt="Notebook Icon">
+    <a href="../메인/main.html"><h1>일기 속 도서관</h1></a>
+    <link rel="stylesheet" href="{{ url_for('static', filename='recommend.css') }}">
+    <nav>
+        <ul>
+            <li><a href="/recommend">도서 추천</a></li>
+            <li><a href="/my_library">도서함</a></li>
+            <li><a href="/mypage">내 정보</a></li>
+        </ul>
+        <button type="button" class="login-button" onClick="location.href='../기본설정/login.html'">로그인</button>
+    </nav>
+</header>
+
+
+<!-- 파일 업로드 -->
 <form id="uploadForm" class="uploadForm" enctype="multipart/form-data" method="POST" action="/flask/upload">
-    <div id="preview">
-        <h3>Preview:</h3>
-        <img id="previewImage" src="" alt="No image selected">
+    <div class="diary-section">
+        <div class="diary-writing" id="diary-writing">
+            <div id="preview">
+                <h3>Preview:</h3>
+                <img id="previewImage" src="" alt="No image selected">
+            </div>
+            <!-- 파일 선택 -->
+            <label for="fileInput">Select File:</label>
+            <input type="file" id="fileInput" name="file" accept="image/*" required>
+
+        </div>
+
+        <!-- 검색 옵션 섹션 -->
+        <div class="keyword-section">
+            <h2>도서 분야</h2>
+            <label>
+                <input type="radio" name="search-option" value="어린이 전체" checked>
+                어린이 전체
+            </label>
+            <label>
+                <input type="radio" name="search-option" value="어린이 문학">
+                어린이 문학
+            </label>
+            <label>
+                <input type="radio" name="search-option" value="어린이 교양">
+                어린이 교양
+            </label>
+            <label>
+                <input type="radio" name="search-option" value="어린이 만화">
+                어린이 만화
+            </label>
+            <button type="submit" id="recommend-button" class="recommend-button">추천받기</button>
+        </div>
     </div>
-
-    <!-- 파일 선택 -->
-    <label for="fileInput">Select File:</label>
-    <input type="file" id="fileInput" name="file" accept="image/*" required>
-
-    <!-- 검색 옵션 섹션 -->
-    <h2>도서 분야</h2>
-    <label>
-        <input type="radio" name="search-option" value="어린이 전체" checked>
-        어린이 전체
-    </label>
-    <label>
-        <input type="radio" name="search-option" value="어린이 문학">
-        어린이 문학
-    </label>
-    <label>
-        <input type="radio" name="search-option" value="어린이 교양">
-        어린이 교양
-    </label>
-    <label>
-        <input type="radio" name="search-option" value="어린이 만화">
-        어린이 만화
-    </label>
-
-    <button type="submit">추천받기</button>
 </form>
+
 
 <!-- 오늘의 일기 -->
 <div class="today-diary">
@@ -129,9 +154,9 @@
             const response = await fetch('/flask/upload', {
                 method: 'POST',
                 headers: {
-                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYnJ1ZCI' +
-                        'sImlhdCI6MTczMjYwMTk4OCwiZXhwIjoxNzMyNjA1NTg4fQ.onpNxVkCY' +
-                        'K9x0wk_TVAcmSkjXcQk7WHzrYop3bf-AB0'
+                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYnJ1ZCIsImlhdCI6M' +
+                        'TczMjYxMDIwOSwiZXhwIjoxNzMy' +
+                        'NjEzODA5fQ.8B8Vlf1XCD0JQKBlmRkDNQ0CtbeMwjB28sAMNPYvhk8'
                 },
                 body: formData
             });
