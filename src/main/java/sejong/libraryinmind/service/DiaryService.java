@@ -3,15 +3,14 @@ package sejong.libraryinmind.service;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import sejong.libraryinmind.dto.DiaryDto;
+import sejong.libraryinmind.entity.BookEntity;
 import sejong.libraryinmind.entity.UserEntity;
 import sejong.libraryinmind.entity.DiaryEntity;
 import sejong.libraryinmind.repository.UserRepository;
 import sejong.libraryinmind.repository.DiaryRepository;
-import jakarta.servlet.http.HttpSession;
+
 import java.util.Map;
 
 
@@ -48,7 +47,7 @@ public class DiaryService {
     }
 
     @Transactional
-    public Long saveDiary(DiaryDto diaryDto, UserEntity user) {
+    public DiaryEntity saveDiary(DiaryDto diaryDto, UserEntity user) {
         if (user == null) {
             throw new IllegalStateException("User not logged in");
         }
@@ -58,7 +57,7 @@ public class DiaryService {
         diaryEntity.setUser(user);
 
         // DiaryEntity 저장
-        return diaryRepository.save(diaryEntity).getId();
+        return diaryRepository.save(diaryEntity);
     }
 
 
@@ -85,7 +84,7 @@ public class DiaryService {
     }
 
     @Transactional
-    public void saveDiaryFromFlaskData(Map<String, Object> flaskData, UserEntity user, Long userId) {
+    public Long saveDiaryFromFlaskData(Map<String, Object> flaskData, UserEntity user, Long userId) {
         if (user == null) {
             throw new IllegalStateException("User not logged in");
         }
@@ -97,9 +96,6 @@ public class DiaryService {
         System.out.println(imageUrl);
         System.out.println(content);
 
-
-        System.out.println("1000자 제한------------------");
-
         DiaryDto diaryDto = DiaryDto.builder()
                 .id(userId)
                 .content(content)
@@ -109,9 +105,13 @@ public class DiaryService {
         DiaryEntity diaryEntity = diaryDto.toEntity();
         diaryEntity.setUser(user);
 
-        System.out.println("setUser------------------");
-
         // DiaryEntity를 데이터베이스에 저장
-        diaryRepository.save(diaryEntity);
+        DiaryEntity savedDiary = diaryRepository.save(diaryEntity);
+
+        // 생성된 Diary ID 반환
+        return savedDiary.getId();
+
     }
+
+
 }

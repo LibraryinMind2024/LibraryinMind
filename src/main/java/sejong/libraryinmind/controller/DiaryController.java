@@ -83,8 +83,7 @@ public class DiaryController {
         return "my_library";
     }
 
-
-    @PostMapping ("/recommend")
+    @PostMapping("/recommend")
     public String SaveDiary(DiaryDto diaryDto){
         UserEntity user = userService.getLoggedInUser();
 
@@ -92,5 +91,4 @@ public class DiaryController {
 
         return "redirect:/my_library";
     }
-
 }

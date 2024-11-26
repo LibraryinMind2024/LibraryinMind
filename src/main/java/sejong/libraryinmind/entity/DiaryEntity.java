@@ -37,6 +37,9 @@ public class DiaryEntity {
     @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
+    @OneToOne(mappedBy = "diary", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private BookEntity book;
+
     @Builder
     public DiaryEntity(Long id, String content, String imageUrl){
         this.id = id;
@@ -51,4 +54,9 @@ public class DiaryEntity {
     public void setUser(UserEntity user) {
         this.user = user;
     }
+
+    public void setBook(BookEntity book) {
+        this.book = book;
+    }
+
 }

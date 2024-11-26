@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import sejong.libraryinmind.dto.DiaryDto;
 import sejong.libraryinmind.entity.UserEntity;
 import sejong.libraryinmind.service.AuthService;
 import sejong.libraryinmind.service.DiaryService;
@@ -53,10 +54,9 @@ public class FlaskRestController {
         System.out.println(response);
 
         // Flask 데이터로 DiaryEntity 저장
-        diaryService.saveDiaryFromFlaskData(response, user, userId);
+        Long diaryId = diaryService.saveDiaryFromFlaskData(response, user, userId);
+        response.put("diaryId", diaryId);
 
         return ResponseEntity.ok(response);
     }
-
-
 }

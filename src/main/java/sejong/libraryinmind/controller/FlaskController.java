@@ -20,6 +20,6 @@ public class FlaskController {
     // 업로드 결과를 HTML로 표시
     @GetMapping("/upload")
     public String showUpload()  {
-        return "upload"; // result.html 템플릿으로 이동
+        return "upload";
     }
 }
