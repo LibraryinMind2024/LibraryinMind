@@ -167,6 +167,13 @@
                 console.log(result);
                 diaryText.value = result.ocr_text || 'OCR 처리 실패';
 
+                // 다이어리 수정 -------------------------------
+                //다이어리 ID 저장
+                const diaryId = result.diaryId;
+                console.log("Diary ID:", diaryId);
+
+                // Diary ID를 로컬 스토리지에 저장
+                localStorage.setItem('diaryId', diaryId);
 
                 // 추천 도서 정보 출력
                 const matchedBooks = result.recommendation_result?.matched_books || [];
@@ -220,14 +227,16 @@
         const bookImage = bookImageElement ? bookImageElement.src : '';
         const bookLink = bookLinkElement ? bookLinkElement.href : '';
 
+        // 로컬 스토리지에서 Diary ID 가져오기
+        const diaryId = localStorage.getItem('diaryId');
 
         const selectedBook = {
-            id: bookId,
             title: bookTitle,
             author: bookAuthor,
             summary: bookSummary,
             bookImage : bookImage,
-            bookLink : bookLink
+            bookLink : bookLink,
+            diaryId: diaryId // Diary ID 추가
         };
 
         console.log("선택된 책:", selectedBook);
