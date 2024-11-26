@@ -48,6 +48,46 @@
 
 <div id="responseMessage" class="message"></div>
 
+
+<div class="recommendation">
+    <h2>추천 도서</h2>
+    <div class="recommendation-row">
+        <!-- 첫 번째 도서 -->
+        <div class="book" id="book1">
+            <img id="book-image1" src="{{ url_for('static', filename='BOOK.png') }}" alt="Book Image 1">
+            <div class="book-info">
+                <h3 id="book-title1"><a href="#" target="_blank" id="book-link1">도서 제목 1</a></h3>
+                <p id="book-author1">저자 1</p>
+                <div id="book-summary1" class="summary-box">추천도서가 표시됩니다</div>
+            </div>
+            <button onclick="selectBook(1)">선택</button>
+        </div>
+
+        <!-- 두 번째 도서 -->
+        <div class="book" id="book2">
+            <img id="book-image2" src="{{ url_for('static', filename='BOOK.png') }}" alt="Book Image 2">
+            <div class="book-info">
+                <h3 id="book-title2"><a href="#" target="_blank" id="book-link2">도서 제목 2</a></h3>
+                <p id="book-author2">저자 2</p>
+                <div id="book-summary2" class="summary-box">추천도서가 표시됩니다</div>
+            </div>
+            <button onclick="selectBook(2)">선택</button>
+        </div>
+
+        <!-- 세 번째 도서 -->
+        <div class="book" id="book3">
+            <img id="book-image3" src="{{ url_for('static', filename='BOOK.png') }}" alt="Book Image 3">
+            <div class="book-info">
+                <h3 id="book-title3"><a href="#" target="_blank" id="book-link3">도서 제목 3</a></h3>
+                <p id="book-author3">저자 3</p>
+                <div id="book-summary3" class="summary-box">추천도서가 표시됩니다</div>
+            </div>
+            <button onclick="selectBook(3)">선택</button>
+        </div>
+
+    </div>
+</div>
+
 <script>
     const uploadForm = document.getElementById('uploadForm');
     const fileInput = document.getElementById('fileInput');
@@ -89,9 +129,9 @@
             const response = await fetch('/flask/upload', {
                 method: 'POST',
                 headers: {
-                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYnJ1ZC' +
-                        'IsImlhdCI6MTczMjU0NDI2NCwiZXhwIjoxNzMyNT' +
-                        'Q3ODY0fQ.-fr-FtgRbNTU2Tf5nNb2qtmErPmmL8ZwM25uYhPycJ8'
+                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYnJ1ZCI' +
+                        'sImlhdCI6MTczMjYwMTk4OCwiZXhwIjoxNzMyNjA1NTg4fQ.onpNxVkCY' +
+                        'K9x0wk_TVAcmSkjXcQk7WHzrYop3bf-AB0'
                 },
                 body: formData
             });
@@ -101,6 +141,36 @@
                 responseMessage.textContent = "File uploaded successfully!";
                 console.log(result);
                 diaryText.value = result.ocr_text || 'OCR 처리 실패';
+
+
+                // 추천 도서 정보 출력
+                const matchedBooks = result.recommendation_result?.matched_books || [];
+                if (matchedBooks.length === 0) {
+                    alert('추천된 도서가 없습니다.');
+                    return;
+                }
+
+                // DOM 업데이트 부분
+                matchedBooks.forEach((book, index) => {
+                    if (index >= 3) return;
+
+                    const bookImage = document.getElementById(`book-image${index + 1}`);
+                    const bookTitle = document.getElementById(`book-title${index + 1}`);
+                    const bookAuthor = document.getElementById(`book-author${index + 1}`);
+                    const bookSummary = document.getElementById(`book-summary${index + 1}`);
+                    const bookLink = document.getElementById(`book-link${index + 1}`); // <a> 태그 가져오기
+
+                    // 도서 정보 업데이트
+                    bookImage.src = book.book_img_url || '{{ url_for("static", filename="BOOK.png") }}';
+                    bookLink.href = book.book_prod_url || '#'; // URL 설정
+                    bookLink.textContent = book.title || '제목 없음'; // 도서 제목 설정
+                    bookLink.target = '_blank'; // 새 창에서 열기
+                    bookAuthor.textContent = `저자: ${book.author || '저자 정보 없음'}`;
+                    bookSummary.textContent = book.prod_introduction || '요약 정보 없음';
+
+                    // 제목 표시
+                    bookTitle.classList.add('show');
+                });
 
             } else {
                 const error = await response.json();
@@ -113,6 +183,54 @@
             responseMessage.style.color = 'red';
         }
     });
+
+    function selectBook(bookId) {
+        // 각 도서의 데이터를 가져오기
+        const bookTitle = document.getElementById(`book-title${bookId}`).innerText;
+        const bookAuthor = document.getElementById(`book-author${bookId}`).innerText;
+        const bookSummary = document.getElementById(`book-summary${bookId}`).innerText;
+        const bookImageElement = document.getElementById(`book-image${bookId}`);
+        const bookLinkElement = document.getElementById(`book-link${bookId}`);
+
+        const bookImage = bookImageElement ? bookImageElement.src : '';
+        const bookLink = bookLinkElement ? bookLinkElement.href : '';
+
+
+        const selectedBook = {
+            id: bookId,
+            title: bookTitle,
+            author: bookAuthor,
+            summary: bookSummary,
+            bookImage : bookImage,
+            bookLink : bookLink
+        };
+
+        console.log("선택된 책:", selectedBook);
+
+        // Spring Boot 서버로 데이터 전송
+        fetch('/api/selected-book', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(selectedBook)
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error("서버 응답 에러");
+                }
+            })
+            .then(data => {
+                alert(`서버 응답: ${data.message}`);
+            })
+            .catch(error => {
+                console.error("에러 발생:", error);
+            });
+    }
+
+
 </script>
 </body>
 </html>
