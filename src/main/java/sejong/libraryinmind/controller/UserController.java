@@ -41,7 +41,7 @@ public class UserController {
         List<UserEntity> userEntityList = this.userService.getList();
         model.addAttribute("customerEntityList", userEntityList);
 
-        return "redirect:/login";
+        return "signup";
     }
 
     //회원가입 처리
@@ -49,7 +49,7 @@ public class UserController {
     public String Signup(@RequestParam String name, String username, String password){
         this.userService.create(name,username,password);
 
-        return "redirect:/signup";
+        return "redirect:/login";
     }
 
 

@@ -20,8 +20,6 @@
             <li><a href="my_library">도서함</a></li>
             <li><a href="mypage">내 정보</a></li>
         </ul>
-        <p th:text="'name: ' + ${name} "></p>
-        <p th:text="'username: ' + ${username} "></p>
 
         <!-- 로그인 상태에 따라 버튼 표시 -->
         <div th:if="${username != null}">
@@ -32,7 +30,6 @@
             <!-- 로그인되지 않은 상태에서 '로그인' 버튼 -->
             <button type="button" class="login-button" onClick="location.href='/login'">로그인</button>
         </div>
-
     </nav>
 </header>
 

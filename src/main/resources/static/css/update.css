@@ -3,7 +3,8 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: #fffaf3;
+    background-color: #fffaf3; /* 부드러운 배경색 */
+    font-family: 'NanumSquare', sans-serif;
 }
 
 /* 헤더 섹션 */
@@ -66,76 +67,87 @@ header nav ul li a:focus {
     border-bottom: 5px solid #ffd24b;
 }
 
-/* 내 정보 페이지 컨테이너 */
+/* 회원 정보 수정 페이지 컨테이너 */
 .mypage-container {
     width: 400px;
-    margin: 80px auto;
-    margin-top: 200px;
+    margin: 100px auto;
     padding: 40px;
     background-color: #ffffff;
     border: 1px solid #ddd;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
-/* 내 정보 제목 */
+/* 제목 스타일 */
 .mypage-container h2 {
-    font-family: 'NanumSquare', sans-serif;
-    font-size: 24px; /* 로그인 제목과 동일한 크기 */
+    font-size: 24px;
     font-weight: 700;
     color: black;
-    text-align: center;
     margin-bottom: 30px;
 }
 
 /* 입력 필드 컨테이너 */
 .input-container {
     margin-bottom: 20px;
+    text-align: left;
 }
 
 /* 입력 필드 라벨 */
 .input-container label {
     display: block;
-    font-family: 'NanumSquare', sans-serif;
     font-size: 16px;
     font-weight: 600;
     color: black;
     margin-bottom: 5px;
 }
 
-/* 사용자 정보 텍스트 상자 */
-.user-info {
-    font-family: 'NanumSquare', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    color: #333;
+/* 입력 필드 */
+/* 모든 입력 필드에 기본 스타일 적용 */
+.input-container input {
+    width: 100%;
     padding: 10px;
-    background-color: #f9f9f9;
+    font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    width: 100%;
     box-sizing: border-box;
-    margin-top: 5px;
-    display: block;
+    font-family: 'NanumSquare', sans-serif;
+    background-color: #fff;
+    color: #000;
 }
 
-/* 내 정보 수정 버튼 */
-.mypage-container .edit-button {
+/* 비밀번호 입력 필드만 별도로 스타일 적용 */
+.input-container input[type="password"] {
+    color: #000 !important; /* 암호화된 텍스트 색상을 검은색으로 설정 */
+    background-color: #fff; /* 배경색을 흰색으로 설정 */
+    border: 1px solid #ccc; /* 테두리 유지 */
+    caret-color: #000; /* 커서 색상을 검은색으로 설정 */
+    box-sizing: border-box; /* 패딩과 테두리를 포함한 크기 계산 */
+    font-family: 'NanumSquare', sans-serif; /* 폰트 유지 */
+}
+
+/* 오류 메시지 */
+#error-message {
+    margin-top: 10px;
+    color: red;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* 버튼 스타일 */
+.edit-button {
     width: 100%;
     padding: 12px;
     font-size: 18px;
-    font-family: 'NanumSquare', sans-serif;
     font-weight: bold;
     background-color: #ffd24b;
     color: black;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    text-align: center;
     transition: background-color 0.3s ease;
-    margin-top: 20px;
 }
 
-.mypage-container .edit-button:hover {
-    background-color: #34495e;
+.edit-button:hover {
+    background-color: #d1a935;
 }

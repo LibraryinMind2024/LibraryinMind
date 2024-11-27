@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Upload</title>
+    <title>도서 추천</title>
     <link rel="stylesheet" href="/css/recommend.css">
 
 </head>
@@ -11,7 +11,7 @@
 
 
 <header>
-    <img src="{{ url_for('static', filename='image/notebook_icon.png') }}" alt="Notebook Icon">
+    <img src="image/notebook_icon.png" alt="Notebook Icon">
     <a href="main"><h1>일기 속 도서관</h1></a>
     <nav>
         <ul>
@@ -30,113 +30,125 @@
     </nav>
 </header>
 
-
-<!-- 파일 업로드 -->
-<form id="uploadForm" class="uploadForm" enctype="multipart/form-data" method="POST" action="/flask/upload">
-    <div class="diary-section">
-        <div class="diary-writing" id="diary-writing">
-            <div id="preview">
-                <h3>Preview:</h3>
-                <img id="previewImage" src="" alt="No image selected">
-            </div>
-            <!-- 파일 선택 -->
-            <label for="fileInput">Select File:</label>
-            <input type="file" id="fileInput" name="file" accept="image/*" required>
-
-        </div>
-
-        <!-- 검색 옵션 섹션 -->
-        <div class="keyword-section">
-            <h2>도서 분야</h2>
-            <label>
-                <input type="radio" name="search-option" value="어린이 전체" checked>
-                어린이 전체
-            </label>
-            <label>
-                <input type="radio" name="search-option" value="어린이 문학">
-                어린이 문학
-            </label>
-            <label>
-                <input type="radio" name="search-option" value="어린이 교양">
-                어린이 교양
-            </label>
-            <label>
-                <input type="radio" name="search-option" value="어린이 만화">
-                어린이 만화
-            </label>
-            <button type="submit" id="recommend-button" class="recommend-button">추천받기</button>
-        </div>
+<div class="container">
+    <!-- 날짜 선택 섹션 -->
+    <div class="date-picker-container">
+        <label id="current-date">📅</label>
+        <span id="display-date"></span>
     </div>
-</form>
 
+    <!-- 파일 업로드 -->
+    <form id="uploadForm" class="uploadForm" enctype="multipart/form-data" method="POST" action="/flask/upload">
+        <div class="diary-section">
+            <div class="diary-writing" id="diary-writing">
+                <div id="speech-bubble" class="speech-bubble">일기 작성하자!</div>
+                <img id="image-preview" class="image-preview" alt=""/>
+                <!-- 파일 선택 -->
+                <label for="fileInput">이미지 업로드</label>
+                <input type="file" id="fileInput" name="file" accept="image/*" required>
 
-<!-- 오늘의 일기 -->
-<div class="today-diary">
-    <h2>오늘의 일기</h2>
-    <textarea id="diary-text" placeholder="오늘의 하루는 어땠나요?" readonly></textarea>
-    <p id="image-url" style="word-wrap: break-word; color: blue; cursor: pointer;"></p> <!-- 이미지 URL 표시 -->
-</div>
-
-<div id="responseMessage" class="message"></div>
-
-
-<div class="recommendation">
-    <h2>추천 도서</h2>
-    <div class="recommendation-row">
-        <!-- 첫 번째 도서 -->
-        <div class="book" id="book1">
-            <img id="book-image1" src="{{ url_for('static', filename='BOOK.png') }}" alt="Book Image 1">
-            <div class="book-info">
-                <h3 id="book-title1"><a href="#" target="_blank" id="book-link1">도서 제목 1</a></h3>
-                <p id="book-author1">저자 1</p>
-                <div id="book-summary1" class="summary-box">추천도서가 표시됩니다</div>
             </div>
-            <button onclick="selectBook(1)">선택</button>
-        </div>
 
-        <!-- 두 번째 도서 -->
-        <div class="book" id="book2">
-            <img id="book-image2" src="{{ url_for('static', filename='BOOK.png') }}" alt="Book Image 2">
-            <div class="book-info">
-                <h3 id="book-title2"><a href="#" target="_blank" id="book-link2">도서 제목 2</a></h3>
-                <p id="book-author2">저자 2</p>
-                <div id="book-summary2" class="summary-box">추천도서가 표시됩니다</div>
+            <!-- 검색 옵션 섹션 -->
+            <div class="keyword-section">
+                <h2>도서 분야</h2>
+                <label>
+                    <input type="radio" name="search-option" value="어린이 전체" checked>
+                    어린이 전체
+                </label>
+                <label>
+                    <input type="radio" name="search-option" value="어린이 문학">
+                    어린이 문학
+                </label>
+                <label>
+                    <input type="radio" name="search-option" value="어린이 교양">
+                    어린이 교양
+                </label>
+                <label>
+                    <input type="radio" name="search-option" value="어린이 만화">
+                    어린이 만화
+                </label>
+                <button type="submit" id="recommend-button" class="recommend-button">추천받기</button>
             </div>
-            <button onclick="selectBook(2)">선택</button>
         </div>
+    </form>
 
-        <!-- 세 번째 도서 -->
-        <div class="book" id="book3">
-            <img id="book-image3" src="{{ url_for('static', filename='BOOK.png') }}" alt="Book Image 3">
-            <div class="book-info">
-                <h3 id="book-title3"><a href="#" target="_blank" id="book-link3">도서 제목 3</a></h3>
-                <p id="book-author3">저자 3</p>
-                <div id="book-summary3" class="summary-box">추천도서가 표시됩니다</div>
+    <!-- 오늘의 일기 -->
+    <div class="today-diary">
+        <h2>오늘의 일기</h2>
+        <textarea id="diary-text" placeholder="오늘의 하루는 어땠나요?" readonly></textarea>
+        <p id="image-url" style="word-wrap: break-word; color: blue; cursor: pointer;"></p> <!-- 이미지 URL 표시 -->
+    </div>
+
+    <div class="recommendation">
+        <h2>추천 도서</h2>
+        <div class="recommendation-row">
+            <!-- 첫 번째 도서 -->
+            <div class="book" id="book1">
+                <img id="book-image1" src="{{ url_for('static', filename='BOOK.png') }}" alt="Book Image 1">
+                <div class="book-info">
+                    <h3 id="book-title1"><a href="#" target="_blank" id="book-link1">도서 제목 1</a></h3>
+                    <p id="book-author1">저자 1</p>
+                    <div id="book-summary1" class="summary-box">추천도서가 표시됩니다</div>
+                </div>
+                <button onclick="selectBook(1)">선택</button>
             </div>
-            <button onclick="selectBook(3)">선택</button>
-        </div>
 
+            <!-- 두 번째 도서 -->
+            <div class="book" id="book2">
+                <img id="book-image2" src="{{ url_for('static', filename='BOOK.png') }}" alt="Book Image 2">
+                <div class="book-info">
+                    <h3 id="book-title2"><a href="#" target="_blank" id="book-link2">도서 제목 2</a></h3>
+                    <p id="book-author2">저자 2</p>
+                    <div id="book-summary2" class="summary-box">추천도서가 표시됩니다</div>
+                </div>
+                <button onclick="selectBook(2)">선택</button>
+            </div>
+
+            <!-- 세 번째 도서 -->
+            <div class="book" id="book3">
+                <img id="book-image3" src="{{ url_for('static', filename='BOOK.png') }}" alt="Book Image 3">
+                <div class="book-info">
+                    <h3 id="book-title3"><a href="#" target="_blank" id="book-link3">도서 제목 3</a></h3>
+                    <p id="book-author3">저자 3</p>
+                    <div id="book-summary3" class="summary-box">추천도서가 표시됩니다</div>
+                </div>
+                <button onclick="selectBook(3)">선택</button>
+            </div>
+        </div>
     </div>
 </div>
 
 <script>
     const uploadForm = document.getElementById('uploadForm');
     const fileInput = document.getElementById('fileInput');
-    const previewImage = document.getElementById('previewImage');
-    const responseMessage = document.getElementById('responseMessage');
     const diaryText = document.getElementById('diary-text');
+    const imagePreview = document.getElementById('image-preview');
+    const speechBubble = document.getElementById('speech-bubble');
 
-    // 파일 선택 시 미리보기
-    fileInput.addEventListener('change', (event) => {
-        const file = event.target.files[0];
+    // 오늘 날짜를 계산하고 표시하는 함수
+    function displayCurrentDate() {
+        const dateElement = document.getElementById('display-date');
+        const today = new Date();
+        const formattedDate = `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`;
+        dateElement.textContent = formattedDate;
+    }
+
+    // 페이지가 로드될 때 날짜 표시
+    window.onload = displayCurrentDate;
+
+    // 이미지 업로드 후 미리보기 표시
+    fileInput.addEventListener('change', function () {
+        const file = fileInput.files[0];
         if (file) {
+            uploadedFile = file;
             const reader = new FileReader();
-            reader.onload = (e) => {
-                previewImage.src = e.target.result;
+            reader.onload = function (e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+                speechBubble.style.display = 'none';
             };
             reader.readAsDataURL(file);
-        } else {
-            previewImage.src = "";
         }
     });
 
@@ -164,7 +176,6 @@
 
             if (response.ok) {
                 const result = await response.json();
-                responseMessage.textContent = "File uploaded successfully!";
                 console.log(result);
                 diaryText.value = result.ocr_text || 'OCR 처리 실패';
 
@@ -235,8 +246,8 @@
             title: bookTitle,
             author: bookAuthor,
             summary: bookSummary,
-            bookImage : bookImage,
-            bookLink : bookLink,
+            bookImage: bookImage,
+            bookLink: bookLink,
             diaryId: diaryId // Diary ID 추가
         };
 
