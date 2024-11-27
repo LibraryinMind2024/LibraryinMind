@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/flask")
 public class FlaskRestController {
 
     @Autowired
@@ -27,7 +26,7 @@ public class FlaskRestController {
     private DiaryService diaryService;
 
 
-    @PostMapping("/upload")
+    @PostMapping("/recommend")
     public ResponseEntity<Map<String, Object>> uploadImageToFlask(
             @RequestParam("file") MultipartFile file,
             @RequestParam("search-option") String searchOption) throws IOException {

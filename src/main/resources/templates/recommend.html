@@ -151,7 +151,7 @@
         formData.append('search-option', selectedOption);
 
         try {
-            const response = await fetch('/flask/upload', {
+            const response = await fetch('/recommend', {
                 method: 'POST',
                 body: formData
             });

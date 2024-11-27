@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import sejong.libraryinmind.dto.DiaryDto;
 import sejong.libraryinmind.entity.DiaryEntity;
 import sejong.libraryinmind.entity.UserEntity;
 import sejong.libraryinmind.service.DiaryService;
@@ -23,20 +22,6 @@ public class DiaryController {
         this.diaryService = diaryService;
     }
 
-    @GetMapping("/diary")
-    public String diarylist(Model model){
-
-        List<DiaryDto> diaryDtoList = this.diaryService.getList();
-        model.addAttribute("diaryDtoList",diaryDtoList);
-
-        return "Diarylist.html";
-    }
-
-    @GetMapping("/post")
-    public String diary(){
-        return "Posting";
-    }
-
     @GetMapping("/recommend")
     public String recommend(Model model) {
         UserEntity user = userService.getLoggedInUser();
@@ -45,7 +30,7 @@ public class DiaryController {
             model.addAttribute("username", userService.getLoggedInUsername());
             model.addAttribute("name", userService.getLoggedInName());
 
-            return "upload";
+            return "recommend";
         }
 
         // 로그인되어 있지 않으면 로그인 페이지로 리다이렉트
@@ -85,14 +70,5 @@ public class DiaryController {
         }
 
         return "my_library";
-    }
-
-    @PostMapping("/recommend")
-    public String SaveDiary(DiaryDto diaryDto){
-        UserEntity user = userService.getLoggedInUser();
-
-        diaryService.saveDiary(diaryDto, user);
-
-        return "redirect:/my_library";
     }
 }

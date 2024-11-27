@@ -17,17 +17,16 @@ import java.util.Optional;
 public class UserController {
 
     private final UserService userService;
-    private final JwtTokenProvider jwtTokenProvider;
 
-    @RequestMapping("/customer")
-    //url과 customer 매핑
-    public String list(Model model){
-
-        List<UserEntity> userEntityList = this.userService.getList();
-        model.addAttribute("customerEntityList", userEntityList);
-
-        return  "Customer";
-    }
+//    @RequestMapping("/customer")
+//    //url과 customer 매핑
+//    public String list(Model model){
+//
+//        List<UserEntity> userEntityList = this.userService.getList();
+//        model.addAttribute("customerEntityList", userEntityList);
+//
+//        return  "Customer";
+//    }
 
     @RequestMapping("/")
     public String root(Model model){
