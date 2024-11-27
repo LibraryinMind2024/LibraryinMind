@@ -11,9 +11,8 @@
 
 
 <header>
-    <img src="{{ url_for('static', filename='notebook_icon.png') }}" alt="Notebook Icon">
-    <a href="../메인/main.html"><h1>일기 속 도서관</h1></a>
-    <link rel="stylesheet" href="{{ url_for('static', filename='recommend.css') }}">
+    <img src="{{ url_for('static', filename='image/notebook_icon.png') }}" alt="Notebook Icon">
+    <a href="main"><h1>일기 속 도서관</h1></a>
     <nav>
         <ul>
             <li><a href="/recommend">도서 추천</a></li>
@@ -22,11 +21,9 @@
         </ul>
         <!-- 로그인 상태에 따라 버튼 표시 -->
         <div th:if="${username != null}">
-            <!-- 로그인된 상태에서 '로그아웃' 버튼 -->
             <a href="/logout">로그아웃</a>
         </div>
         <div th:if="${username == null}">
-            <!-- 로그인되지 않은 상태에서 '로그인' 버튼 -->
             <button type="button" class="login-button" onClick="location.href='/login'">로그인</button>
         </div>
 

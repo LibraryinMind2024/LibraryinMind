@@ -18,16 +18,6 @@ public class UserController {
 
     private final UserService userService;
 
-//    @RequestMapping("/customer")
-//    //url과 customer 매핑
-//    public String list(Model model){
-//
-//        List<UserEntity> userEntityList = this.userService.getList();
-//        model.addAttribute("customerEntityList", userEntityList);
-//
-//        return  "Customer";
-//    }
-
     @RequestMapping("/")
     public String root(Model model){
         model.addAttribute("username", userService.getLoggedInUsername());
@@ -51,7 +41,7 @@ public class UserController {
         List<UserEntity> userEntityList = this.userService.getList();
         model.addAttribute("customerEntityList", userEntityList);
 
-        return  "signup";
+        return "redirect:/login";
     }
 
     //회원가입 처리

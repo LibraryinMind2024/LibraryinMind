@@ -194,24 +194,9 @@ def upload_and_process_image():
             print("Error: Invalid search option")
             return jsonify({'error': 'Invalid search option'}), 400
 
-        # option_to_file[search_option]이 튜플이므로, 첫 번째 값과 두 번째 값을 각각 결합합니다.
-        titles_file, detailed_file = path + option_to_file[search_option][0], path + option_to_file[search_option][1]
+        titles_file, detailed_file = option_to_file[search_option]
 
-        print("!!!!!!!!!!!!!!!!!!!!!!!")
-        print(f"titles_file: {titles_file}")
-        print(f"detailed_file: {detailed_file}")
-
-        print("Current Working Directory:", os.getcwd())
-        print("titles_file exists:", os.path.exists(titles_file))
-        print("detailed_file exists:", os.path.exists(detailed_file))
-
-        print("titles_file absolute path:", os.path.abspath(titles_file))
-        print("detailed_file absolute path:", os.path.abspath(detailed_file))
-
-        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-
-
-# 책 목록 및 세부 정보 로드
+        # 책 목록 및 세부 정보 로드
         if os.path.exists(titles_file) and os.path.exists(detailed_file):
             with open(titles_file, 'r', encoding='utf-8') as f:
                 book_title = json.load(f)
