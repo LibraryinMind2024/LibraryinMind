@@ -1,14 +1,11 @@
 package sejong.libraryinmind.service;
 
 import jakarta.servlet.http.HttpSession;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import sejong.libraryinmind.dto.DiaryDto;
 import sejong.libraryinmind.entity.UserEntity;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import sejong.libraryinmind.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

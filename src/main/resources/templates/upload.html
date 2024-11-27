@@ -153,11 +153,6 @@
         try {
             const response = await fetch('/flask/upload', {
                 method: 'POST',
-                headers: {
-                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYnJ1' +
-                        'ZCIsImlhdCI6MTczMjYyNTQ1MiwiZXhwIjoxNzMy' +
-                        'NjI5MDUyfQ.aj3ZL2m1l2pkvrws2qOs6rgQ12ysYptLtRm_MICnDzQ'
-                },
                 body: formData
             });
 

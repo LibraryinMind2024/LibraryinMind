@@ -5,16 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import sejong.libraryinmind.dto.DiaryDto;
 import sejong.libraryinmind.entity.UserEntity;
-import sejong.libraryinmind.service.AuthService;
 import sejong.libraryinmind.service.DiaryService;
 import sejong.libraryinmind.service.FlaskService;
 import sejong.libraryinmind.service.UserService;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/flask")
@@ -29,17 +26,13 @@ public class FlaskRestController {
     @Autowired
     private DiaryService diaryService;
 
-    @Autowired
-    private AuthService authService;
 
     @PostMapping("/upload")
     public ResponseEntity<Map<String, Object>> uploadImageToFlask(
             @RequestParam("file") MultipartFile file,
-            @RequestParam("search-option") String searchOption,
-            @RequestHeader("Authorization") String authorizationHeader) throws IOException {
+            @RequestParam("search-option") String searchOption) throws IOException {
 
-        // JWT 토큰에서 username을 추출하여 사용자 인증
-        UserEntity user = authService.authenticateFromToken(authorizationHeader);
+        UserEntity user = userService.getLoggedInUser();
 
         if (user == null) {
             // 인증 실패 시 401 Unauthorized 응답 반환
