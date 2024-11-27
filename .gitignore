@@ -16,6 +16,7 @@ newvenv
 newvenv/lib/
 newvenv/pyvenv.cfg
 files
+*.json
 
 ### STS ###
 .apt_generated
