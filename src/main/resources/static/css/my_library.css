@@ -3,6 +3,7 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family : 'NanumSquare', sans-serif;
 }
 
 /* 헤더 섹션 */
@@ -162,14 +163,14 @@ header .login-button:active {
 .diary-section, .book-container {
     flex: 1;
     max-width: 45%;
-    min-height: 400px; /* 최소 높이를 동일하게 설정 */
+    min-height: 400px;
     background-color: #fffaf3;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 기본 그림자 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    transition: box-shadow 0.3s; /* 그림자 변화에 부드러운 전환 효과 */
+    transition: box-shadow 0.3s;
 }
 
 .diary-section:hover, .book-container:hover {
@@ -190,12 +191,29 @@ header .login-button:active {
     font-family: 'NanumSquare', sans-serif;
 }
 
-.diary-content, .book-card {
+/* 일기 이미지와 책 이미지 크기를 동일하게 설정 */
+.diary-image, .book-image {
+    width: 180px; /* 기존보다 더 큰 크기 */
+    height: 270px; /* 비율을 유지하면서 크기 증가 */
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.diary-image:hover, .book-image:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.diary-card, .book-card {
+    height: 270px; /* 이미지 높이와 동일 */
     flex: 1;
     padding: 15px;
     background-color: #fff;
     border-radius: 8px;
-    border: 2px dashed #ffd24b;;
+    border: 2px dashed #ffd24b;
     overflow-y: auto;
     white-space: pre-wrap;
     line-height: 1.8;
@@ -204,7 +222,7 @@ header .login-button:active {
 }
 
 /* 추천 도서 카드 */
-.book-card {
+.book-card, .diary-card {
     display: flex;
     align-items: center;
     gap: 40px;
@@ -215,45 +233,56 @@ header .login-button:active {
     transition: box-shadow 0.3s; /* hover 시 그림자 효과만 유지 */
 }
 
-.book-image {
-    width: 150px;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.book-image:hover {
-    transform: scale(1.1);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-}
-.book-info {
+.diary-content, .book-info {
     flex: 1;
 }
 
 .book-info h3 {
-    font-size: 20px;
+    /*font-size: 20px;*/
     margin: 0 0 10px 0;
     color: #333;
 }
 
 .book-info p {
     margin: 5px 0; /* 줄 사이의 간격을 줄임 */
-    font-size: 14px;
+    /*font-size: 14px;*/
     line-height: 1.5; /* 줄 간격 조정 */
     color: #555;
 }
 
-/* 반응형 */
-@media (max-width: 768px) {
-    .main-container {
-        flex-direction: column;
-    }
 
-    .diary-section,
-    .book-container {
-        max-width: 100%;
-        min-height: auto;
-    }
+/* Modal */
+.modal {
+    display: none; /* 기본적으로 숨김 */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 80%;
+    max-height: 80%;
+    border-radius: 8px;
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: black;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #f44336;
 }

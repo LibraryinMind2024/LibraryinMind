@@ -10,7 +10,7 @@ body {
     padding: 0;
     box-sizing: border-box;
     font-family: 'NanumSquare', sans-serif;
-    background-color: #f9f9f9;
+    background-color: #fffaf3;
 }
 
 /* 헤더 섹션 */
@@ -74,14 +74,14 @@ header nav ul li a {
 
 header nav ul li a:hover,
 header nav ul li a:focus {
-    border-bottom: 5px solid #2c3e50;
+    border-bottom: 5px solid #ffd24b;
 }
 
 header .login-button {
     font-family : 'NanumSquare', sans-serif;
     font-weight: bold;
-    background-color: #2c3e50;
-    color: #ffffff;
+    background-color: #ffd24b;
+    color: black;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -93,8 +93,9 @@ header .login-button {
 
 header .login-button:hover,
 header .login-button:focus {
-    background-color: #2c3e50bb;
     outline: none;
+    background-color: #d1a935;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* signup 컨테이너 */
@@ -154,8 +155,8 @@ header .login-button:focus {
     font-size: 18px;
     font-family: 'NanumSquare', sans-serif;
     font-weight: bold;
-    background-color: #2c3e50;
-    color: #ffffff;
+    background-color: #ffd24b;
+    color: black;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -163,5 +164,7 @@ header .login-button:focus {
 }
 
 #signupForm .signup-button:hover {
-    background-color: #34495e;
+    background-color: #d1a935;
 }
+
+

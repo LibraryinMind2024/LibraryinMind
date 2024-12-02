@@ -1,0 +1,377 @@
+/* 반응형 스타일 추가 */
+
+/* 태블릿 크기 이하 (1024px 이하) */
+@media (max-width: 1024px) {
+    header {
+        padding: 10px 40px;
+    }
+
+    header img {
+        width: 60px;
+    }
+
+    header h1 {
+        font-size: 26px;
+    }
+
+    header nav ul {
+        gap: 10px;
+    }
+
+    header .login-button {
+        padding: 8px 12px;
+        font-size: 14px;
+        margin-left: 20px;
+    }
+
+    /* 소개 섹션 크기 조정 */
+    #about1 {
+        padding: 50px 15px;
+    }
+
+    #about1 h2 {
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+
+    #about1 p {
+        font-size: 18px;
+    }
+
+    #about1 .bulb-icon {
+        width: 55px;
+    }
+
+    /* 소개 섹션2 수정 */
+    #about2 {
+        padding: 0;
+        margin-top: 0;
+    }
+
+    .about2-content {
+        flex-direction: column;
+    }
+
+    .text-container {
+        padding: 0 35px 10px 35px;
+    }
+
+    .text-container h2 {
+        font-size: 28px;
+    }
+
+    .text-container p {
+        font-size: 16px;
+    }
+
+    .text-container button {
+        padding: 10px 15px;
+        font-size: 14px;
+        width: 120px;
+        margin-top: 0;
+    }
+
+    .image-container {
+        width: 100%;
+        padding: 0;
+    }
+
+    .image-container img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    #advantages {
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* 전체 박스를 중간에 위치하도록 설정 */
+    }
+
+    .advantage-box {
+        width: 80%;
+        padding: 20px;
+        margin-bottom: 15px;
+        text-align: center; /* 텍스트 가운데 정렬 */
+    }
+
+    .advantage-header {
+        display: flex;
+        align-items: center; /* 아이콘과 제목을 수평으로 정렬 */
+        justify-content: center; /* 아이콘과 제목이 박스의 중간에 위치하도록 설정 */
+        gap: 10px; /* 이미지와 제목 사이 간격 */
+        margin-bottom: 10px;
+    }
+
+    .advantage-header img {
+        width: 35px; /* 아이콘 크기 약간 키우기 */
+        margin: 0; /* 이미지의 상하 좌우 마진 제거 */
+        vertical-align: middle; /* 이미지와 텍스트 높이 일치시키기 */
+    }
+
+    .advantage-header h3 {
+        font-size: 20px;
+        margin: 0;
+    }
+
+    .advantage-box p {
+        font-size: 14px;
+        margin-top: 10px;
+    }
+}
+
+/* 모바일 크기 (768px 이하) */
+@media (max-width: 768px) {
+    header {
+        padding: 10px 20px;
+    }
+
+    header img {
+        width: 50px;
+    }
+
+    header h1 {
+        font-size: 22px;
+    }
+
+    header nav ul {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    header nav ul li a {
+        font-size: 12px;
+    }
+
+    header .login-button {
+        padding: 5px 10px;
+        font-size: 12px;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    /* 소개 섹션 크기 조정 */
+    #about1 {
+        padding: 30px 10px;
+    }
+
+    #about1 h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    #about1 p {
+        font-size: 14px;
+    }
+
+    #about1 .bulb-icon {
+        width: 45px;
+    }
+
+    /* 소개 섹션2 수정 */
+    #about2 {
+        padding: 0;
+        margin-top: 0;
+    }
+
+    .about2-content {
+        flex-direction: column;
+    }
+
+    .text-container {
+        padding: 0 35px 10px 35px;
+    }
+
+    .text-container h2 {
+        font-size: 22px;
+    }
+
+    .text-container p {
+        font-size: 14px;
+    }
+
+    .text-container button {
+        padding: 8px 12px;
+        font-size: 12px;
+        width: 120px;
+        margin-top: 0;
+    }
+
+    .image-container {
+        width: 100%;
+        padding: 0;
+    }
+
+    .image-container img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    #advantages {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        gap: 10px;
+    }
+
+    .advantage-box {
+        width: 85%;
+        margin-bottom: 15px;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .advantage-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .advantage-header img {
+        width: 30px; /* 아이콘 크기 약간 키우기 */
+        margin: 0;
+        vertical-align: middle;
+    }
+
+    .advantage-header h3 {
+        font-size: 18px;
+        margin: 0;
+    }
+
+    .advantage-box p {
+        font-size: 13px;
+        margin-top: 10px;
+    }
+}
+
+/* 작은 모바일 크기 (480px 이하) */
+@media (max-width: 480px) {
+    header {
+        padding: 10px;
+    }
+
+    header img {
+        width: 40px;
+    }
+
+    header h1 {
+        font-size: 18px;
+    }
+
+    header nav ul {
+        gap: 5px;
+        align-items: flex-start;
+    }
+
+    header nav ul li a {
+        font-size: 11px;
+    }
+
+    header .login-button {
+        padding: 5px 8px;
+        font-size: 11px;
+        margin-top: 10px;
+        margin-left: 0;
+    }
+
+    /* 소개 섹션 크기 조정 */
+    #about1 {
+        padding: 20px 5px;
+    }
+
+    #about1 h2 {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    #about1 p {
+        font-size: 13px;
+    }
+
+    #about1 .bulb-icon {
+        width: 35px;
+    }
+
+    /* 소개 섹션2 수정 */
+    #about2 {
+        padding: 0;
+        margin-top: 0;
+    }
+
+    .about2-content {
+        flex-direction: column;
+    }
+
+    .text-container {
+        padding: 0 35px 10px 35px;
+    }
+
+    .text-container h2 {
+        font-size: 18px;
+    }
+
+    .text-container p {
+        font-size: 12px;
+    }
+
+    .text-container button {
+        padding: 6px 10px;
+        font-size: 11px;
+        width: 100px;
+        margin-top: 0;
+    }
+
+    .image-container {
+        width: 100%;
+        padding: 0;
+    }
+
+    .image-container img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    #advantages {
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+        gap: 10px;
+    }
+
+    .advantage-box {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .advantage-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .advantage-header img {
+        width: 25px; /* 아이콘 크기 약간 키우기 */
+        margin: 0;
+        vertical-align: middle;
+    }
+
+    .advantage-header h3 {
+        font-size: 16px;
+        margin: 0;
+    }
+
+    .advantage-box p {
+        font-size: 12px;
+        margin-top: 10px;
+    }
+}

@@ -1,0 +1,164 @@
+/* 기본 반응형 스타일 설정 */
+@media screen and (max-width: 1024px) {
+    /* 태블릿 크기 이하 */
+    header {
+        padding: 10px 40px;
+    }
+
+    header img {
+        width: 60px;
+    }
+
+    header h1 {
+        font-size: 26px;
+    }
+
+    header nav ul {
+        gap: 10px;
+    }
+
+    header .login-button {
+        padding: 8px 12px;
+        font-size: 14px;
+        margin-left: 20px;
+    }
+
+    .signup-container h2 {
+        font-size: 22px;
+    }
+
+    .input-container label {
+        font-size: 15px;
+    }
+
+    .input-container input {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .edit-button {
+        padding: 10px;
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    header {
+        padding: 10px 20px;
+    }
+
+    header img {
+        width: 50px;
+    }
+
+    header h1 {
+        font-size: 22px;
+    }
+
+    header nav{
+        gap: 40px;
+    }
+
+    header nav ul {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    header nav ul li a {
+        font-size: 12px;
+    }
+
+    header .login-button {
+        padding: 5px 10px;
+        font-size: 12px;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+
+    .signup-container h2 {
+        font-size: 20px;
+    }
+
+    .input-container label {
+        font-size: 14px;
+    }
+
+    .input-container input {
+        padding: 7px;
+        font-size: 13px;
+    }
+
+    .edit-button {
+        padding: 9px;
+        font-size: 15px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    /* 작은 모바일 크기 이하 */
+
+    header {
+        padding: 10px;
+    }
+
+    header img {
+        width: 40px;
+    }
+
+    header h1 {
+        font-size: 18px;
+    }
+
+    header nav{
+        gap: 20px;
+    }
+
+    header nav ul {
+        gap: 5px;
+        align-items: flex-start;
+        align-items: center;
+    }
+
+    header nav ul li a {
+        font-size: 11px;
+    }
+
+    header .login-button {
+        padding: 5px 8px;
+        font-size: 11px;
+        margin-top: 10px;
+        margin-left: 0;
+    }
+
+    .signup-container {
+        width: 70%;
+        padding: 15px;
+        margin: 100px auto; /* 상단 마진 조정 */
+        justify-content: center;
+        align-items: center;
+    }
+
+    .signup-container h2 {
+        font-size: 18px;
+    }
+
+    .input-container label {
+        font-size: 13px;
+    }
+
+    .input-container input {
+        padding: 6px;
+        font-size: 12px;
+    }
+
+    .edit-button {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    #error-message {
+        font-size: 12px;
+    }
+}

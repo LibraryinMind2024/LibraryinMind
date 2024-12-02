@@ -4,6 +4,7 @@ body {
     padding: 0;
     box-sizing: border-box;
     background-color: #fffaf3;
+    font-family : 'NanumSquare', sans-serif;
 }
 
 /* 헤더 섹션 */
@@ -28,22 +29,22 @@ header a {
 header nav {
     display: flex;
     align-items: center;
-    margin-left: auto;
+    margin-left: auto; /* nav 요소가 가능한 공간만 차지하도록 설정 */
 }
 
 header h1 {
     font-size: 30px;
-    font-family: 'NanumSquare', sans-serif;
+    font-family : 'NanumSquare', sans-serif;
     font-weight: 800;
-    color: black;
+    color: #2c3e50;
     margin: 0;
     padding: 10px 20px;
     border-radius: 5px;
-    white-space: nowrap;
+    white-space: nowrap; /* 줄바꿈 방지 */
 }
 
 header nav ul {
-    font-family: 'NanumSquare', sans-serif;
+    font-family : 'NanumSquare', sans-serif;
     font-weight: bold;
     font-size: 18px;
     list-style: none;
@@ -53,9 +54,13 @@ header nav ul {
     gap: 20px;
 }
 
+header nav ul li {
+    margin: 0;
+}
+
 header nav ul li a {
     text-decoration: none;
-    color: black;
+    color:  black;
     font-size: 1em;
     padding: 8px 10px;
     transition: color 0.3s;
@@ -65,6 +70,28 @@ header nav ul li a:hover,
 header nav ul li a:focus {
     border-bottom: 5px solid #ffd24b;
 }
+
+header .login-button {
+    font-family : 'NanumSquare', sans-serif;
+    font-weight: bold;
+    background-color: #ffd24b;
+    color: black;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+    margin-left: 100px;
+}
+
+header .login-button:hover,
+header .login-button:focus {
+    outline: none;
+    background-color: #d1a935;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
 
 /* 내 정보 페이지 컨테이너 */
 .mypage-container {

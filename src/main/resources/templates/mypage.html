@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>내 정보 입력</title>
     <link rel="stylesheet" href="css/mypage.css">
+    <link rel="stylesheet" href="css/mypage_rp.css">
     <link rel="stylesheet" href="https://webfontworld.github.io/NanumSquare/NanumSquare.css">
 </head>
 <body>
@@ -18,6 +19,13 @@
             <li><a href="my_library">도서함</a></li>
             <li><a href="mypage">내 정보</a></li>
         </ul>
+
+        <div th:if="${username != null}">
+            <button type="button" class="login-button" onClick="location.href='/logout'">로그아웃</button>
+        </div>
+        <div th:if="${username == null}">
+            <button type="button" class="login-button" onClick="location.href='/login'">로그인</button>
+        </div>
     </nav>
 </header>
 

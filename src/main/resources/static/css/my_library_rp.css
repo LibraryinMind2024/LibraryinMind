@@ -1,0 +1,235 @@
+/* 태블릿 크기 이하 (1024px 이하) */
+@media (max-width: 1024px) {
+    header {
+        padding: 10px 40px;
+    }
+
+    header img {
+        width: 60px;
+    }
+
+    header h1 {
+        font-size: 26px;
+    }
+
+    header nav ul {
+        gap: 10px;
+    }
+
+    header .login-button {
+        padding: 8px 12px;
+        font-size: 14px;
+        margin-left: 20px;
+    }
+
+    .date-picker-container {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .date-picker-container label {
+        font-size: 16px; /* '날짜 선택' 글자 크기 축소 */
+    }
+
+    .main-container {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .diary-section,
+    .book-container {
+        max-width: 100%;
+        min-height: auto;
+        padding: 12px;
+    }
+
+    .diary-section h2,
+    .book-container h2 {
+        font-size: 18px;
+        margin-bottom: 8px;
+    }
+
+    .book-info h3 {
+        font-size: 19px;
+        margin-bottom: 3px; /* 간격 축소 */
+    }
+
+    .book-info p {
+        font-size: 16px;
+        margin: 1px 0; /* 간격 최소화 */
+    }
+}
+
+/* 모바일 크기 (768px 이하) */
+@media (max-width: 768px) {
+    header {
+        padding: 10px 20px;
+    }
+
+    header img {
+        width: 50px;
+    }
+
+    header h1 {
+        font-size: 22px;
+    }
+
+    header nav ul {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    header nav ul li a {
+        font-size: 12px;
+    }
+
+    header .login-button {
+        padding: 5px 10px;
+        font-size: 12px;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .date-picker-container {
+        padding: 6px;
+        font-size: 12px;
+    }
+
+    .date-picker-container label {
+        font-size: 15px;
+    }
+
+    .main-container {
+        flex-direction: column;
+        padding: 8px;
+    }
+
+    .diary-section,
+    .book-container {
+        padding: 8px;
+    }
+
+    .diary-section h2,
+    .book-container h2 {
+        font-size: 18px;
+    }
+
+    .book-card {
+        gap: 12px;
+    }
+
+    .book-image, .diary-image {
+        width: 100px;
+        height: 140px;
+    }
+
+    .book-info h3 {
+        font-size: 16px;
+        margin-bottom: 3px;
+    }
+
+    .book-info p {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        padding: 0;
+        font-size: 15px;
+        display: block;
+        line-height: normal;
+    }
+}
+
+/* 작은 모바일 크기 (480px 이하) */
+@media (max-width: 480px) {
+    header {
+        padding: 10px;
+    }
+
+    header img {
+        width: 40px;
+    }
+
+    header h1 {
+        font-size: 18px;
+    }
+
+    header nav ul {
+        gap: 5px;
+        align-items: flex-start;
+    }
+
+    header nav ul li a {
+        font-size: 11px;
+    }
+
+    header .login-button {
+        padding: 5px 8px;
+        font-size: 11px;
+        margin-top: 10px;
+        margin-left: 0;
+    }
+
+    .date-picker-container {
+        padding: 3px;
+        margin: 3px;
+    }
+
+    .date-picker-container label {
+        font-size: 14px; /* '날짜 선택' 글자 크기 축소 */
+    }
+
+    .main-container {
+        gap: 4px;
+    }
+
+    .diary-section,
+    .book-container {
+        padding: 6px;
+    }
+
+    .diary-card {
+        line-height: 1.35;
+        font-size: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .diary-section h2,
+    .book-container h2 {
+        font-size: 17px;
+    }
+
+    .book-card {
+        gap: 0px;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .book-image, .diary-image {
+        width: 60px;
+        height: 100px;
+    }
+
+    .book-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0px;
+        padding: 0;
+        margin: 0;
+    }
+
+    .book-info h3 {
+        font-size: 16px;
+        margin-bottom: 3px;
+    }
+
+    .book-info p {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        padding: 0;
+        font-size: 15px;
+        display: block;
+        line-height: normal;
+    }
+}

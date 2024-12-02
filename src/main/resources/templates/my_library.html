@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>내 도서함</title>
     <link rel="stylesheet" href="css/my_library.css">
+    <link rel="stylesheet" href="css/my_library_rp.css">
+
     <link rel="stylesheet" href="https://webfontworld.github.io/NanumSquare/NanumSquare.css">
     <!-- Font Awesome 아이콘 사용 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -21,13 +23,10 @@
             <li><a href="mypage">내 정보</a></li>
         </ul>
 
-        <!-- 로그인 상태에 따라 버튼 표시 -->
         <div th:if="${username != null}">
-            <!-- 로그인된 상태에서 '로그아웃' 버튼 -->
-            <a href="/logout">로그아웃</a>
+            <button type="button" class="login-button" onClick="location.href='/logout'">로그아웃</button>
         </div>
         <div th:if="${username == null}">
-            <!-- 로그인되지 않은 상태에서 '로그인' 버튼 -->
             <button type="button" class="login-button" onClick="location.href='/login'">로그인</button>
         </div>
     </nav>
@@ -42,9 +41,6 @@
     </button>
 </div>
 
-<!--&lt;!&ndash; 일기 결과 출력 영역 &ndash;&gt;-->
-<!--<div id="diary-result"></div>-->
-
 <!-- 메인 섹션 -->
 <main class="main-container">
     <!-- 나의 일기 섹션 -->
@@ -52,8 +48,11 @@
         <h2>
             📝 나의 일기
         </h2>
-        <div class="diary-content" id="diary-content">
-            여기에 일기 내용이 표시됩니다.
+        <div class="diary-card">
+            <img src="https://via.placeholder.com/180x270" alt="Diary Image" class="diary-image" id="diary-image">
+            <div class="diary-content">
+                <p id="diary-content">여기에 일기 내용이 표시됩니다.</p>
+            </div>
         </div>
     </section>
 
@@ -63,19 +62,16 @@
             📖 추천 도서
         </h2>
         <div class="book-card">
-            <img src="https://via.placeholder.com/120x180" alt="Book Image" class="book-image" id="book-image">
+            <img src="https://via.placeholder.com/180x270" alt="Book Image" class="book-image" id="book-image">
             <div class="book-info">
                 <h3 id="book-title">책 제목</h3>
                 <p id="book-author">저자: 저자명</p>
-                <p id="book-publisher">출판사: 출판사명</p>
                 <p id="book-summary">줄거리: 여기에 책 줄거리가 표시됩니다.</p>
             </div>
         </div>
     </section>
 
 </main>
-
-
 
 <script>
     document.getElementById("search-button").addEventListener("click", function () {
@@ -91,93 +87,77 @@
         fetch(`/my_library/api?date=${selectedDate}`)
             .then(response => response.json())
             .then(data => {
+                const diaryImageElement = document.getElementById("diary-image");
                 const diaryContentDiv = document.getElementById("diary-content");
-                const bookSectionDiv = document.querySelector(".book-container");
+                const bookImageElement = document.getElementById("book-image");
+                const bookTitleElement = document.getElementById("book-title");
+                const bookAuthorElement = document.getElementById("book-author");
+                const bookSummaryElement = document.getElementById("book-summary");
 
-                diaryContentDiv.innerHTML = ""; // 기존 다이어리 내용 초기화
-                bookSectionDiv.innerHTML = ""; // 기존 추천 도서 초기화
+                // 기존 일기 및 도서 정보 초기화
+                diaryContentDiv.innerHTML = "";
 
                 // 데이터가 배열인지 확인
-                if (!Array.isArray(data)) {
-                    diaryContentDiv.innerHTML = "<p>일기 데이터 형식에 문제가 있습니다.</p>";
-                    return;
-                }
-
-                // 데이터가 없을 때 처리
-                if (data.length === 0) {
+                if (!Array.isArray(data) || data.length === 0) {
                     diaryContentDiv.innerHTML = "<p>일기가 없습니다.</p>";
+                    diaryImageElement.src = "https://via.placeholder.com/120x180"; // 기본 이미지 설정
+                    bookImageElement.src = "https://via.placeholder.com/180x270"; // 기본 도서 이미지 설정
+                    bookTitleElement.textContent = "책 제목";
+                    bookAuthorElement.textContent = "저자: 저자명";
+                    bookSummaryElement.textContent = "줄거리: 여기에 책 줄거리가 표시됩니다.";
                     return;
                 }
 
                 // 첫 번째 일기만 표시
-                const diary = data[0]; // 첫 번째 데이터 사용
-                const contentElement = document.createElement("p");
-                contentElement.textContent = diary.content; // 일기 내용
-                diaryContentDiv.appendChild(contentElement);
+                const diary = data[0];
+                diaryImageElement.src = diary.imageUrl || "https://via.placeholder.com/120x180"; // 이미지 업데이트
+                diaryContentDiv.textContent = diary.content || "내용 없음"; // 일기 내용 업데이트
 
-                if (diary.imageUrl) {
-                    const diaryImageElement = document.createElement("img");
-                    diaryImageElement.src = diary.imageUrl;
-                    diaryImageElement.alt = "Diary Image";
-                    diaryImageElement.style.maxWidth = "300px";
-                    diaryImageElement.style.marginTop = "10px";
-                    diaryContentDiv.appendChild(diaryImageElement);
-                }
-
-                // 책 정보 섹션
+                // 추천 도서 정보 업데이트
                 if (diary.book) {
-                    const bookCard = document.createElement("div");
-                    bookCard.classList.add("book-card");
+                    bookImageElement.src = diary.book.bookImage || "https://via.placeholder.com/180x270";
+                    bookTitleElement.textContent = diary.book.title || "제목 없음";
+                    bookAuthorElement.textContent = `저자: ${diary.book.author || "저자 정보 없음"}`;
+                    bookSummaryElement.textContent = `줄거리: ${diary.book.summary || "줄거리 정보 없음"}`;
 
-                    const bookImage = document.createElement("img");
-                    bookImage.src = diary.book.bookImage || "https://via.placeholder.com/120x180"; // 이미지 없을 때 기본 이미지
-                    bookImage.alt = "Book Image";
-                    bookImage.classList.add("book-image");
-                    bookCard.appendChild(bookImage);
-
-                    const bookInfo = document.createElement("div");
-                    bookInfo.classList.add("book-info");
-
-                    const bookTitle = document.createElement("h3");
-                    bookTitle.textContent = diary.book.title || "제목 없음";
-                    bookInfo.appendChild(bookTitle);
-
-                    const bookAuthor = document.createElement("p");
-                    bookAuthor.textContent = `저자: ${diary.book.author || "저자 정보 없음"}`;
-                    bookInfo.appendChild(bookAuthor);
-
-                    const bookPublisher = document.createElement("p");
-                    bookPublisher.textContent = `출판사: ${diary.book.publisher || "출판사 정보 없음"}`;
-                    bookInfo.appendChild(bookPublisher);
-
-                    const bookSummary = document.createElement("p");
-                    bookSummary.textContent = `줄거리: ${diary.book.summary || "줄거리 정보 없음"}`;
-                    bookInfo.appendChild(bookSummary);
-
+                    // 책 상세 링크 추가
+                    const existingLink = document.querySelector(".book-info a");
+                    if (existingLink) {
+                        existingLink.remove();
+                    }
                     if (diary.book.bookLink) {
                         const bookLink = document.createElement("a");
                         bookLink.href = diary.book.bookLink;
                         bookLink.textContent = "책 상세 보기";
                         bookLink.target = "_blank";
-                        bookInfo.appendChild(bookLink);
+                        document.querySelector(".book-info").appendChild(bookLink);
                     }
-
-                    bookCard.appendChild(bookInfo);
-                    bookSectionDiv.appendChild(bookCard);
                 } else {
-                    bookSectionDiv.innerHTML = "<p>추천 도서 정보가 없습니다.</p>";
+                    // 추천 도서가 없을 때 기본값 표시
+                    bookImageElement.src = "https://via.placeholder.com/180x270";
+                    bookTitleElement.textContent = "책 제목";
+                    bookAuthorElement.textContent = "저자: 저자명";
+                    bookSummaryElement.textContent = "줄거리: 여기에 책 줄거리가 표시됩니다.";
                 }
             })
             .catch(error => {
                 console.error("Error fetching diary:", error);
+                const diaryImageElement = document.getElementById("diary-image");
                 const diaryContentDiv = document.getElementById("diary-content");
-                const bookSectionDiv = document.querySelector(".book-container");
-                diaryContentDiv.innerHTML = "<p>일기를 가져오는 중에 오류가 발생했습니다.</p>";
-                bookSectionDiv.innerHTML = "<p>도서 정보를 가져오는 중에 오류가 발생했습니다.</p>";
+                const bookImageElement = document.getElementById("book-image");
+                const bookTitleElement = document.getElementById("book-title");
+                const bookAuthorElement = document.getElementById("book-author");
+                const bookSummaryElement = document.getElementById("book-summary");
+
+                // 오류 발생 시 기본값 설정
+                diaryImageElement.src = "https://via.placeholder.com/120x180";
+                diaryContentDiv.innerHTML = "<p>일기를 가져오는 중 오류가 발생했습니다.</p>";
+                bookImageElement.src = "https://via.placeholder.com/180x270";
+                bookTitleElement.textContent = "책 제목";
+                bookAuthorElement.textContent = "저자: 저자명";
+                bookSummaryElement.textContent = "줄거리: 여기에 책 줄거리가 표시됩니다.";
             });
     });
-
 </script>
-
 </body>
 </html>

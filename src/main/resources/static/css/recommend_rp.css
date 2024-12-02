@@ -1,0 +1,251 @@
+/* recommend_rp.css */
+
+/* 태블릿 크기 이하 (1024px 이하) */
+@media screen and (max-width: 1024px) {
+    header {
+        padding: 10px 40px;
+    }
+
+    header img {
+        width: 60px;
+    }
+
+    header h1 {
+        font-size: 24px;
+    }
+
+    header nav ul {
+        gap: 10px;
+    }
+
+    header .login-button {
+        padding: 8px 12px;
+        font-size: 14px;
+        margin-left: 20px;
+    }
+
+    .diary-section {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+        gap: 15px;
+    }
+
+    .diary-writing, .keyword-section, .today-diary {
+        width: 90%;
+        padding: 15px;
+        background-color: #fff0d9;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .today-diary textarea {
+        width: 100%;
+        height: 120px;
+        font-size: 14px;
+    }
+
+    .top-image {
+        width: 180px;
+        height: auto;
+    }
+
+    .recommendation .recommendation-row {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .recommendation .book {
+        width: 45%;
+    }
+
+    .recommendation .book img {
+        width: 80px;
+    }
+
+    .recommend-button {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+
+    .keyword-section h2, .today-diary h2, .recommendation h2 {
+        font-size: 18px; /* 제목 글자 크기 축소 */
+    }
+}
+
+/* 모바일 크기 (768px 이하) */
+@media screen and (max-width: 768px) {
+    header {
+        padding: 10px 20px;
+    }
+
+    header img {
+        width: 50px;
+    }
+
+    header h1 {
+        font-size: 20px;
+    }
+
+    header nav ul {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    header nav ul li a {
+        font-size: 12px;
+    }
+
+    header .login-button {
+        padding: 5px 10px;
+        font-size: 12px;
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .diary-section {
+        gap: 10px;
+    }
+
+    .diary-writing, .keyword-section, .today-diary {
+        width: 95%;
+        padding: 10px;
+    }
+
+    .today-diary textarea {
+        height: 100px;
+        font-size: 12px;
+    }
+
+    .top-image {
+        width: 150px;
+        height: auto;
+    }
+
+    .recommendation .book {
+        width: 100%;
+    }
+
+    .recommendation .book img {
+        width: 70px;
+    }
+
+    .keyword-section label {
+        width: 120px;
+        font-size: 14px;
+    }
+
+    .keyword-section h2, .today-diary h2, .recommendation h2 {
+        font-size: 16px; /* 제목 글자 크기 축소 */
+    }
+}
+
+/* 작은 모바일 크기 (480px 이하) */
+@media screen and (max-width: 480px) {
+    header {
+        padding: 10px;
+    }
+
+    header img {
+        width: 40px;
+    }
+
+    header h1 {
+        font-size: 16px;
+    }
+
+    header nav ul {
+        gap: 5px;
+        align-items: flex-start;
+    }
+
+    header nav ul li a {
+        font-size: 11px;
+    }
+
+    header .login-button {
+        padding: 5px 8px;
+        font-size: 11px;
+        margin-top: 10px;
+        margin-left: 0;
+    }
+
+    .diary-section {
+        gap: 10px;
+    }
+
+    .diary-writing, .keyword-section, .today-diary {
+        width: 100%;
+        padding: 8px;
+    }
+
+    .today-diary textarea {
+        height: 80px;
+        font-size: 12px;
+    }
+
+    .top-image {
+        width: 100px;
+        height: auto;
+    }
+
+    .recommendation .recommendation-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .recommendation .book {
+        width: 100%;
+    }
+
+    .recommendation .book img {
+        width: 60px;
+    }
+
+    .keyword-section label {
+        font-size: 12px;
+        width: 100px;
+    }
+
+    .recommend-button {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+
+    .keyword-section h2, .today-diary h2, .recommendation h2 {
+        font-size: 14px; /* 제목 글자 크기 축소 */
+        text-align: center;
+    }
+}
+
+#loading-spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+    width: 100%;
+    height: 100%;
+}
+
+#loading-spinner img {
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+/* 스핀 애니메이션 */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
