@@ -272,6 +272,6 @@ print("Python script is running!")
 
 if __name__ == '__main__':
     # Flask 서버를 백그라운드에서 실행
-    subprocess.Popen(['python3', 'app.py'])  # Flask 서버 실행
+    subprocess.Popen(['python3', '/home/ec2-user/.ssh/LibraryinMind_backend/src/main/resources/app.py'])  # Flask 서버 실행
     print("Python script is running!")
     app.run(port=5000, debug=True)
