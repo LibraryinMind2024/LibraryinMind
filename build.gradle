@@ -28,15 +28,15 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
+//	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+//	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
 	implementation 'org.springframework.boot:spring-boot-starter'
-	runtimeOnly 'mysql:mysql-connector-java:5.7.24'
+//	runtimeOnly 'mysql:mysql-connector-java:5.7.24'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
