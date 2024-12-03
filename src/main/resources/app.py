@@ -33,14 +33,6 @@ option_to_file = {
     "어린이 만화": ("cartoon_titles.json", "cartoon_detailed.json")
 }
 
-path = "/Users/choeyugyeong/Desktop/LibraryinMind_backend/src/main/resources/"
-
-# 경로가 존재하는지 확인합니다.
-if os.path.exists(path):
-    print(f"{path} exists.")
-else:
-    print(f"{path} does not exist.")
-
 
 def allowed_file(filename):
     """허용된 파일 확장자 확인"""
@@ -272,6 +264,6 @@ print("Python script is running!")
 
 if __name__ == '__main__':
     # Flask 서버를 백그라운드에서 실행
-    subprocess.Popen(['python3', '/home/ec2-user/.ssh/LibraryinMind_backend/src/main/resources/app.py'])  # Flask 서버 실행
+    subprocess.Popen(['nohup', 'python3', '/home/ec2-user/.ssh/LibraryinMind_backend/src/main/resources/app.py', '&'])
     print("Python script is running!")
-    app.run(port=5000, debug=True)
+    app.run(port=5001, debug=True)
