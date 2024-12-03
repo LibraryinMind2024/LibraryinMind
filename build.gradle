@@ -42,6 +42,7 @@ dependencies {
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
 	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'mysql:mysql-connector-java:8.0.33' // 최신 버전 확인
 //	runtimeOnly 'mysql:mysql-connector-java:5.7.24'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
