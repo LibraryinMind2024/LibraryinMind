@@ -5,11 +5,20 @@ import org.springframework.stereotype.Component;
 
 import java.io.*;
 
-@Component
 public class PythonRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        // 이미 실행 중인 프로세스 확인 (Flask 서버)
+        String[] checkProcess = {"bash", "-c", "ps aux | grep 'flask' | grep -v grep"};
+        Process checkProcessResult = new ProcessBuilder(checkProcess).start();
+        int resultCode = checkProcessResult.waitFor();
+
+        if (resultCode == 0) {
+            System.out.println("Flask server is already running. Skipping start.");
+            return;  // Flask 서버가 이미 실행 중이면 종료
+        }
+
         // resources 폴더 내 app.py 경로 설정
         File pythonFile = new File("src/main/resources/app.py"); // 절대 경로 사용
 
