@@ -11,11 +11,13 @@ import base64
 import traceback
 import re
 import uuid
+import subprocess
 
 # Flask 애플리케이션 초기화
 app = Flask(__name__, static_folder="static", template_folder="templates")
 CORS(app)
 load_dotenv()
+
 
 # 환경 변수 설정
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -269,4 +271,7 @@ print("Python script is running!")
 # 기존의 코드 추가
 
 if __name__ == '__main__':
+    # Flask 서버를 백그라운드에서 실행
+    subprocess.Popen(['python', 'app.py'])  # Flask 서버 실행
+    print("Python script is running!")
     app.run(port=5000, debug=True)
