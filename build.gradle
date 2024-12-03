@@ -6,6 +6,7 @@ plugins {
 
 group = 'sejong'
 version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
 
 java {
 	toolchain {
@@ -35,7 +36,7 @@ dependencies {
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
 	implementation 'org.springframework.boot:spring-boot-starter'
-	runtimeOnly 'com.mysql:mysql-connector-j'
+	runtimeOnly 'mysql:mysql-connector-java:5.7.24'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
@@ -45,8 +46,8 @@ dependencies {
 	implementation group: 'org.springframework.cloud', name: 'spring-cloud-gcp-starter', version: '1.2.5.RELEASE'
 	implementation group: 'org.springframework.cloud', name: 'spring-cloud-gcp-storage', version: '1.2.5.RELEASE'
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
-	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
-	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+//	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+//	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
 }
 
