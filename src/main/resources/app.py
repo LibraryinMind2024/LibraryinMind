@@ -262,8 +262,9 @@ def test_gpt():
 print("Python script is running!")
 # 기존의 코드 추가
 
-# if __name__ == '__main__':
-#     # Flask 서버를 백그라운드에서 실행
-#     subprocess.Popen(['nohup', 'python3', '/home/ec2-user/.ssh/LibraryinMind_backend/src/main/resources/app.py', '&'])
-#     print("Python script is running!")
-#     app.run(port=5001, debug=True)
+if __name__ == '__main__':
+    # Flask 서버를 백그라운드에서 실행
+    subprocess.Popen(['nohup', 'python3', '/home/ec2-user/.ssh/LibraryinMind_backend/src/main/resources/app.py', '&'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    print("Flask server is running in the background.")
+    # Flask 서버가 실행되도록 대기하지 않고, 다른 코드 계속 실행
+    app.run(port=5000, debug=True)
