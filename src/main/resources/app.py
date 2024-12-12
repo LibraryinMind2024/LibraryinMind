@@ -264,7 +264,16 @@ print("Python script is running!")
 
 if __name__ == '__main__':
     # Flask 서버를 백그라운드에서 실행
-    subprocess.Popen(['nohup', 'python3', '/home/ec2-user/.ssh/LibraryinMind_backend/src/main/resources/app.py', '&'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    process = subprocess.Popen(
+        ['nohup', 'python3', '/home/ec2-user/.ssh/LibraryinMind_backend/src/main/resources/app.py', '&'],
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE
+    )
     print("Flask server is running in the background.")
-    # Flask 서버가 실행되도록 대기하지 않고, 다른 코드 계속 실행
-    app.run(port=5000, debug=True)
+
+    # Flask 서버가 제대로 실행되었는지 확인 (필요한 경우 추가적인 로깅을 할 수 있습니다)
+    time.sleep(5)  # Flask 서버가 실행될 시간을 준 후, 다른 작업을 계속 실행
+
+    # 다른 작업 진행...
+    # 예: Spring Boot 애플리케이션 실행 등
+    # app.run(port=5001, debug=True) 제거
+
