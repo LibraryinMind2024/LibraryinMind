@@ -27,11 +27,16 @@ imgbb_api_key = os.getenv("IMGBB_API_KEY")  # ImgBB API 키 추가
 
 # 선택에 따라 다른 저장된 JSON 파일 로드
 option_to_file = {
-    "어린이 전체": ("entire_titles.json", "entire_detailed.json"),
-    "어린이 문학": ("literature_titles.json", "literature_detailed.json"),
-    "어린이 교양": ("refinement_titles.json", "refinement_detailed.json"),
-    "어린이 만화": ("cartoon_titles.json", "cartoon_detailed.json")
+    "어린이 전체": ("/home/ec2-user/.ssh/LibraryinMind_backend/entire_titles.json", "/home/ec2-user/.ssh/LibraryinMind_backend/entire_detailed.json"),
+    "어린이 문학": ("/home/ec2-user/.ssh/LibraryinMind_backend/literature_titles.json", "/home/ec2-user/.ssh/LibraryinMind_backend/literature_detailed.json"),
+    "어린이 교양": ("/home/ec2-user/.ssh/LibraryinMind_backend/refinement_titles.json", "/home/ec2-user/.ssh/LibraryinMind_backend/refinement_detailed.json"),
+    "어린이 만화": ("/home/ec2-user/.ssh/LibraryinMind_backend/cartoon_titles.json", "/home/ec2-user/.ssh/LibraryinMind_backend/cartoon_detailed.json")
 }
+
+os.path.exists("/home/ec2-user/.ssh/LibraryinMind_backend/entire_titles.json")
+os.path.exists("/ec2-user/.ssh/LibraryinMind_backend/entire_titles.json")
+os.path.exists("/.ssh/LibraryinMind_backend/entire_titles.json")
+os.path.exists("/LibraryinMind_backend/entire_titles.json")
 
 
 def allowed_file(filename):
@@ -188,12 +193,7 @@ def upload_and_process_image():
             print("Error: Invalid search option")
             return jsonify({'error': 'Invalid search option'}), 400
 
-        # 옵션에 따라 titles_file과 detailed_file 경로 설정
-        titles_file_name, detailed_file_name = option_to_file[search_option]
-
-        # 절대 경로로 변환
-        titles_file = os.path.join(os.getcwd(), titles_file_name)
-        detailed_file = os.path.join(os.getcwd(), detailed_file_name)
+        titles_file, detailed_file = option_to_file[search_option]
 
         # 책 목록 및 세부 정보 로드
         if os.path.exists(titles_file) and os.path.exists(detailed_file):
