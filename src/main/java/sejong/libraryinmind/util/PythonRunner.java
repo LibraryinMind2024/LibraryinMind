@@ -28,7 +28,8 @@ public class PythonRunner implements CommandLineRunner {
 
         // Flask 서버 실행
         ProcessBuilder processBuilder = new ProcessBuilder(
-                "newvenv/bin/python3", pythonFile.getAbsolutePath());
+                "/usr/bin/python3", pythonFile.getAbsolutePath());
+
         processBuilder.redirectErrorStream(true);  // 에러 스트림도 동일한 출력 스트림으로 합침
         processBuilder.redirectOutput(ProcessBuilder.Redirect.DISCARD);  // 출력을 무시
 
