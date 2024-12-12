@@ -18,7 +18,7 @@ import java.util.Map;
 public class FlaskService {
 
     private final RestTemplate restTemplate = new RestTemplate();
-    private final String flaskUrl = "http://localhost:5000"; // Flask 서버 URL
+    private final String flaskUrl = "http://52.65.96.105:5000"; // Flask 서버 URL
 
     public Map<String, Object> uploadAndProcessImage(MultipartFile file,String searchOption) throws IOException {
         // Flask 서버 URL 설정
