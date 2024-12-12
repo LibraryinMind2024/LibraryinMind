@@ -188,7 +188,12 @@ def upload_and_process_image():
             print("Error: Invalid search option")
             return jsonify({'error': 'Invalid search option'}), 400
 
-        titles_file, detailed_file = option_to_file[search_option]
+        # 옵션에 따라 titles_file과 detailed_file 경로 설정
+        titles_file_name, detailed_file_name = option_to_file[search_option]
+
+        # 절대 경로로 변환
+        titles_file = os.path.join(os.getcwd(), titles_file_name)
+        detailed_file = os.path.join(os.getcwd(), detailed_file_name)
 
         # 책 목록 및 세부 정보 로드
         if os.path.exists(titles_file) and os.path.exists(detailed_file):
