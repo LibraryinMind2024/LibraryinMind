@@ -22,7 +22,7 @@ public class BookRestController {
 
             // 응답 생성
             Map<String, String> response = new HashMap<>();
-            response.put("message", "도서 데이터가 성공적으로 저장되었습니다.");
+            response.put("message", "도서가 저장되었습니다. 도서함에서 확인해보세요!");
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             // 에러 처리

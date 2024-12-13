@@ -33,12 +33,6 @@ option_to_file = {
     "어린이 만화": ("/home/ec2-user/.ssh/LibraryinMind_backend/cartoon_titles.json", "/home/ec2-user/.ssh/LibraryinMind_backend/cartoon_detailed.json")
 }
 
-os.path.exists("/home/ec2-user/.ssh/LibraryinMind_backend/entire_titles.json")
-os.path.exists("/ec2-user/.ssh/LibraryinMind_backend/entire_titles.json")
-os.path.exists("/.ssh/LibraryinMind_backend/entire_titles.json")
-os.path.exists("/LibraryinMind_backend/entire_titles.json")
-
-
 def allowed_file(filename):
     """허용된 파일 확장자 확인"""
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
@@ -275,10 +269,6 @@ if __name__ == '__main__':
     )
     print("Flask server is running in the background.")
 
-    # Flask 서버가 제대로 실행되었는지 확인 (필요한 경우 추가적인 로깅을 할 수 있습니다)
     time.sleep(5)  # Flask 서버가 실행될 시간을 준 후, 다른 작업을 계속 실행
 
-    # 다른 작업 진행...
-    # 예: Spring Boot 애플리케이션 실행 등
-    # app.run(port=5001, debug=True) 제거
 
