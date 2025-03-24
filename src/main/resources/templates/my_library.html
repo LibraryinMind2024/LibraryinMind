@@ -128,9 +128,6 @@
                         existingLink.remove();
                     }
                     if (diary.book.bookLink) {
-                        const bookInfo = document.querySelector(".book-info");
-                        bookInfo.innerHTML = ""; // 기존 요소 초기화
-
                         const bookLink = document.createElement("a");
                         bookLink.href = diary.book.bookLink;
                         bookLink.textContent = "책 상세 보기";
@@ -139,7 +136,10 @@
                     }
                 } else {
                     // 추천 도서가 없을 때 기본값 표시
-                    document.querySelector(".book-info").innerHTML = "";
+                    const existingLink = document.querySelector(".book-info a");
+                    if (existingLink) {
+                        existingLink.remove();
+                    }
 
                     bookImageElement.src = "https://via.placeholder.com/180x270";
                     bookTitleElement.textContent = "책 제목";
