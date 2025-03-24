@@ -106,7 +106,7 @@
                     bookImageElement.src = "https://via.placeholder.com/180x270"; // 기본 도서 이미지 설정
                     bookTitleElement.textContent = "책 제목";
                     bookAuthorElement.textContent = "저자: 저자명";
-                    bookSummaryElement.textContent = "줄거리: 여기에 책 줄거리가 표시됩니다.";
+                    bookSummaryElement.textContent = "줄거리: 책 줄거리가 표시됩니다.";
                     return;
                 }
 
@@ -128,6 +128,9 @@
                         existingLink.remove();
                     }
                     if (diary.book.bookLink) {
+                        const bookInfo = document.querySelector(".book-info");
+                        bookInfo.innerHTML = ""; // 기존 요소 초기화
+
                         const bookLink = document.createElement("a");
                         bookLink.href = diary.book.bookLink;
                         bookLink.textContent = "책 상세 보기";
@@ -136,10 +139,12 @@
                     }
                 } else {
                     // 추천 도서가 없을 때 기본값 표시
+                    document.querySelector(".book-info").innerHTML = "";
+
                     bookImageElement.src = "https://via.placeholder.com/180x270";
                     bookTitleElement.textContent = "책 제목";
                     bookAuthorElement.textContent = "저자: 저자명";
-                    bookSummaryElement.textContent = "줄거리: 여기에 책 줄거리가 표시됩니다.";
+                    bookSummaryElement.textContent = "줄거리: 책 줄거리가 표시됩니다.";
                 }
             })
             .catch(error => {
@@ -157,7 +162,7 @@
                 bookImageElement.src = "https://via.placeholder.com/180x270";
                 bookTitleElement.textContent = "책 제목";
                 bookAuthorElement.textContent = "저자: 저자명";
-                bookSummaryElement.textContent = "줄거리: 여기에 책 줄거리가 표시됩니다.";
+                bookSummaryElement.textContent = "줄거리: 책 줄거리가 표시됩니다.";
             });
     });
 </script>
